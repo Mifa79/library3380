@@ -155,6 +155,15 @@
                                     <input type="password" class="form-control" id="password2" name="password2" value=""
                                         placeholder=" Repeat Password">
                                 </div>
+                                <div class="sign-up-select" id="sign-up-select">
+                                        <p>   Are you faculty, student, or staff?</p>
+										<select name="user_type">
+                                            <option value="faculty">Faculty</option>
+                                            <option value="student">Student</option>
+                                            <option value="staff">Staff</option>
+
+                                        </select>
+							    </div>
 
                                 <div class="col-md-12 form-group">
       
@@ -163,7 +172,7 @@
                                     </button>
                                     <div class="lost_pass">
                                         {% for message in messages %}
-                                        <li> {{message}} </li>
+                                        <ul> {{message}} </ul>
                                         {% endfor %}
                                     </div>
                                 </div>

@@ -8202,6 +8202,18 @@ del {
   height: 40px;
 }
 
+
+.sign-up-select {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  height: 80px;
+  width: 500px;
+  flex-direction: row;
+  padding-left: 30px;
+
+}
+
+
 /* line 969, ../../SAIFUL/Running_project/250 eCommerce_HTML/250 eCommerce_HTML/250 eCommerce_HTML/assets/scss/_elements.scss */
 .default-select .nice-select {
   border: none;

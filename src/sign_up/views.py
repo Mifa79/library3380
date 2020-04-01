@@ -12,6 +12,9 @@ def sign_up(request):
         email = request.POST['email']
         password1 = request.POST['password1']
         password2 = request.POST['password2']
+        user_type = request.POST['user_type']
+
+        print(user_type)
 
         
 
@@ -23,7 +26,7 @@ def sign_up(request):
             messages.info(request, '**ERROR: Username already exists')
         if username == '':
             messages.info(request, '**ERROR: Username is required')
-        if User.objects.filter(email=email).exists():
+        if (User.objects.filter(email=email).exists() and email != ''):
             messages.info(request, '**ERROR: Email already taken')
         if email == '':
             messages.info(request, '**ERROR: Email address is required')
