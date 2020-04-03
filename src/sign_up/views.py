@@ -3,6 +3,10 @@ from django.contrib.auth.models import User, auth
 from django.contrib import messages
 from django.http import HttpResponse
 from django.db import connection
+from django.db import models
+from django.utils.translation import ugettext_lazy as _
+from django.utils import timezone
+from django.contrib.auth.hashers import make_password
 
 def sign_up(request):
     with connection.cursor() as cursor:
@@ -15,7 +19,9 @@ def sign_up(request):
             email = request.POST['email']
             password1 = request.POST['password1']
             password2 = request.POST['password2']
-            user_type = request.POST['user_type']       
+            user_type = request.POST['user_type'] 
+            date_joined = timezone.now()
+            print('now is ',  date_joined)  
 
             if first_name == '':
                 messages.info(request, '**ERROR: First Name is required')
@@ -23,7 +29,9 @@ def sign_up(request):
             if last_name == '':
                 messages.info(request, '**ERROR: Last Name is required')
 
-            cursor.execute("SELECT COUNT(user_name) FROM user WHERE user_name = %s", [username])
+            # cursor.execute("SELECT COUNT(user_name) FROM user WHERE user_name = %s", [username])
+            # user_name_num = [item[0] for item in cursor.fetchall()]
+            cursor.execute("SELECT COUNT(username) FROM auth_user WHERE username = %s", [username])
             user_name_num = [item[0] for item in cursor.fetchall()]
             if user_name_num[0] > 0:
                 messages.info(request, '**ERROR: Username already exists')
@@ -31,7 +39,9 @@ def sign_up(request):
             if username == '':
                 messages.info(request, '**ERROR: Username is required')
 
-            cursor.execute("SELECT COUNT(user_email) FROM user WHERE user_email = %s", [email])
+            # cursor.execute("SELECT COUNT(user_email) FROM user WHERE user_email = %s", [email])
+            # user_email_num = [item[0] for item in cursor.fetchall()]
+            cursor.execute("SELECT COUNT(email) FROM auth_user WHERE email = %s", [email])
             user_email_num = [item[0] for item in cursor.fetchall()]
             if user_email_num[0] > 0:
                 messages.info(request, '**ERROR: Email already taken')
@@ -48,17 +58,22 @@ def sign_up(request):
             if password1 == password2 and (user_name_num[0] == 0) and (user_email_num[0] == 0) and (password1 != '') and (first_name != '')\
                     and (last_name != '') and (username != '') and (email != ''):
 
+                password = make_password(password1, salt=None, hasher='default')
 
-                cursor.execute("INSERT INTO user (fname, lname, user_name, user_email, user_password, user_type_ID)\
-                                VALUE (%s, %s, %s, %s, %s, %s)", [first_name, last_name, username, email, password1, user_type])
+                # cursor.execute("INSERT INTO user (fname, lname, user_name, user_email, user_password, user_type_ID)\
+                #                 VALUE (%s, %s, %s, %s, %s, %s)", [first_name, last_name, username, email, password1, user_type])
+
+                cursor.execute("INSERT INTO auth_user (first_name, last_name, username, email, password, is_superuser, is_staff, is_active, date_joined)\
+                                VALUE (%s, %s, %s, %s, %s, %s, %s, %s, %s)", [first_name, last_name, username, email, password, 0, 1, 1, date_joined])
                 row = cursor.fetchall()
-                # return row
-
-
 
                 # user = User.objects.create_user(username=username, password=password1, email=email, first_name=first_name,
                 #                                     last_name=last_name)
+                
+                # user.employeee.department = "abcxyz"
                 # user.save()
+
+                
                 return render(request, 'sign_up_success.html')
 
             return redirect('sign_up')
