@@ -69,8 +69,16 @@
                                 </div>
                                 <div class="header-info-right">
                                    <ul>
-                                       <li><a href="login">Log in </a></li>
+                                       {% if user.is_authenticated %}
+                                       <li> <p style="color: #ffffff"> Hello, {{user.first_name}}</p>  </li>
+                                       <li><a href="#">My Account</a></li>
+                                       <li><a href="logout">Logout</a></li>
+
+                                       {% else %}
+                                       <li><a href="my_login">Login </a></li>
                                        <li><a href="sign_up">Register</a></li>
+
+                                       {% endif %}
                                    </ul>
                                 </div>
                             </div>
@@ -83,7 +91,7 @@
                             <!-- Logo -->
                             <div class="col-xl-1 col-lg-1 col-md-1 col-sm-3">
                                 <div class="logo">
-                                  <a href="home"><img src="{% static 'img/logo/lib_logo.png' %}" alt=""></a>
+                                  <a href="{% url 'home' %}"><img src="{% static 'img/logo/lib_logo.png' %}" alt=""></a>
                                 </div>
                             </div>
                             <div class="col-xl-6 col-lg-8 col-md-7 col-sm-5">
@@ -91,8 +99,8 @@
                                 <div class="main-menu f-right d-none d-lg-block">
                                     <nav>
                                         <ul id="navigation">
-                                            <li><a href="home">Home</a></li>
-                                            <li><a href="book_list">Book</a></li>
+                                            <li><a href="{% url 'home' %}">Home</a></li>
+                                            <li><a href="{% url 'book_list' %}">Book</a></li>
                                             <li><a href="laptop_list">Laptop</a></li>
                                             <li><a href="media_list">Media</a></li>
                                             <!-- <li class="hot"><a href="#">Latest</a>
@@ -179,7 +187,11 @@
                                     <p data-animation="fadeInRight" data-delay=".8s">Best Book Collection By 2020!</p>
                                     <!-- Hero-btn -->
                                     <div class="hero__btn" data-animation="fadeInRight" data-delay="1s">
+                                        {% if user.is_authenticated %}
+                                        <a href="{% url 'book_list' %}" class="btn hero-btn">Discover Now</a>
+                                        {% else %}
                                         <a href="sign_up" class="btn hero-btn">Register Now</a>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>

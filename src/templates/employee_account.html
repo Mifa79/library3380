@@ -72,7 +72,7 @@
                                    <ul>                                          
                                         {% if user.is_authenticated %}
                                         <li> <p style="color: #ffffff"> Hello, {{user.first_name}}</p>  </li>
-                                        <li><a href="#">My Account</a></li>
+                                        <!-- <li><a href="#">My Account</a></li> -->
                                         <li><a href="logout">Logout</a></li>
  
                                         {% else %}
@@ -100,11 +100,8 @@
                                 <div class="main-menu f-right d-none d-lg-block">
                                     <nav>                                                
                                         <ul id="navigation">                                                                                                                                     
-                                            <li><a href="{% url 'home' %}">Home</a></li>
-                                            <li><a href="{% url 'book_list' %}">Book</a></li>
-                                            <li><a href="laptop_list">Laptop</a></li>
-                                            <li><a href="media_list">Media</a></li>
-
+                                            <li><a href="#">Manage Book</a></li>
+                                            <li><a href="#">Manage Laptop</a></li>
                                         </ul>
                                     </nav>
                                 </div>
@@ -124,11 +121,11 @@
                                             <i class="far fa-heart"></i>
                                         </div>
                                     </li> -->
-                                    <li>
+                                    <!-- <li>
                                         <div class="shopping-card">
                                             <a href="cart.html"><i class="fas fa-shopping-cart"></i></a>
                                         </div>
-                                    </li>
+                                    </li> -->
                                 </ul>
                             </div>
                             <!-- Mobile Menu -->
@@ -153,7 +150,7 @@
                     <div class="row">
                         <div class="col-xl-12">
                             <div class="hero-cap text-center">
-                                <h2>Discover our Books</h2>
+                                <h2>Employee Account</h2>
                             </div>
                         </div>
                     </div>
@@ -168,18 +165,6 @@
                 <div class="row product-btn d-flex justify-content-between">
                         <div class="properties__button">
                             <!--Nav Button  -->
-                            <nav>                                                                                                
-                                <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                    <a class="nav-item nav-link" id="nav-home-tab" data-toggle="" href="/book_list" role="tab" aria-controls="nav-home" aria-selected="true">All</a>
-                                    {% for subject in subjects %}
-                                    <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="" href="/book_list/{{subject}}" role="tab" aria-controls="nav-profile" aria-selected="false">{{subject}}</a>
-                                    {% endfor %}
-                                    <!-- <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true" action="list_all_books" method="GET" >All</a>
-                                    <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Science</a>
-                                    <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Art</a>
-                                    <a class="nav-item nav-link" id="nav-last-tab" data-toggle="tab" href="#nav-last" role="tab" aria-controls="nav-contact" aria-selected="false">Engineering</a> -->
-                                </div>
-                            </nav>
                             <!--End Nav Button  -->
                         </div>
                         <!-- <div class="select-this d-flex">

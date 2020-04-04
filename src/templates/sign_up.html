@@ -39,7 +39,7 @@
                                 </div>
                                 <div class="header-info-right">
                                    <ul>                                          
-                                        <li><a href="login">Log in </a></li>
+                                        <li><a href="my_login">Log in </a></li>
                                         <li><a href="sign_up">Register  </a></li>
                                    </ul>
                                 </div>
@@ -155,12 +155,13 @@
                                     <input type="password" class="form-control" id="password2" name="password2" value=""
                                         placeholder=" Repeat Password">
                                 </div>
-                                <div class="sign-up-select" id="sign-up-select">
-                                        <p>   Are you faculty, student, or staff?</p>
+                                <div class="sign-up-select" id="sign-up-select" data-validate = "Occupation is required">
+                                        <p>Are you faculty, student, or library employee?</p>
 										<select name="user_type">
-                                            <option value="1000">Faculty</option>
-                                            <option value="1001">Student</option>
-                                            <option value="1002">Staff</option>
+                                            <option value="">Select an option below</option>
+                                            <option value="faculty">Faculty</option>
+                                            <option value="student">Student</option>
+                                            <option value="employee">Library Employee</option>
 
                                         </select>
 							    </div>

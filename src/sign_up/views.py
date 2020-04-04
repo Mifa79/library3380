@@ -12,7 +12,7 @@ def sign_up(request):
     with connection.cursor() as cursor:
 
         if request.method == 'POST':
-            print("yeah")
+            print("loc oi", request.POST)
             first_name = request.POST['first_name']
             last_name = request.POST['last_name']
             username = request.POST['username']
@@ -21,7 +21,6 @@ def sign_up(request):
             password2 = request.POST['password2']
             user_type = request.POST['user_type'] 
             date_joined = timezone.now()
-            print('now is ',  date_joined)  
 
             if first_name == '':
                 messages.info(request, '**ERROR: First Name is required')
@@ -55,8 +54,12 @@ def sign_up(request):
             if password1 == '':
                 messages.info(request, '**ERROR: Password is required')
 
+            if user_type == '':
+                messages.info(request, '**ERROR: Occuptation is required')
+            
+
             if password1 == password2 and (user_name_num[0] == 0) and (user_email_num[0] == 0) and (password1 != '') and (first_name != '')\
-                    and (last_name != '') and (username != '') and (email != ''):
+                    and (last_name != '') and (username != '') and (email != '') and (user_type != ''):
 
                 password = make_password(password1, salt=None, hasher='default')
 
@@ -65,6 +68,15 @@ def sign_up(request):
 
                 cursor.execute("INSERT INTO auth_user (first_name, last_name, username, email, password, is_superuser, is_staff, is_active, date_joined)\
                                 VALUE (%s, %s, %s, %s, %s, %s, %s, %s, %s)", [first_name, last_name, username, email, password, 0, 1, 1, date_joined])
+                row = cursor.fetchall()
+
+                cursor.execute("SELECT id FROM auth_user WHERE username = %s", [username])
+                user_ID = cursor.fetchone()
+
+                cursor.execute("SELECT id FROM auth_group WHERE name = %s", [user_type])
+                group_ID = cursor.fetchone()
+
+                cursor.execute("INSERT INTO auth_user_groups (user_id, group_id) VALUE (%s, %s)", [user_ID, group_ID])
                 row = cursor.fetchall()
 
                 # user = User.objects.create_user(username=username, password=password1, email=email, first_name=first_name,
