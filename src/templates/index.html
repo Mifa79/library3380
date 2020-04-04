@@ -72,7 +72,7 @@
                                        {% if user.is_authenticated %}
                                        <li> <p style="color: #ffffff"> Hello, {{user.first_name}}</p>  </li>
                                        <li><a href="#">My Account</a></li>
-                                       <li><a href="logout">Logout</a></li>
+                                       <li><a href="{% url 'logout' %}">Logout</a></li>
 
                                        {% else %}
                                        <li><a href="my_login">Login </a></li>
@@ -241,7 +241,7 @@
                                 <img src="{% static 'img/categori/book_category.jpg' %}" alt="">
                                 <div class="category-caption">
                                     <h2>Book</h2>
-                                    <span class="best"><a href="book_list">Discover Now</a></span>
+                                    <span class="best"><a href="{% url 'book_list' %}">Discover Now</a></span>
                                     <span class="collection">New Science Books!</span>
                                 </div>
                             </div>

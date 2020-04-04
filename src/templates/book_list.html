@@ -73,7 +73,7 @@
                                         {% if user.is_authenticated %}
                                         <li> <p style="color: #ffffff"> Hello, {{user.first_name}}</p>  </li>
                                         <li><a href="#">My Account</a></li>
-                                        <li><a href="logout">Logout</a></li>
+                                        <li><a href="{% url 'logout' %}">Logout</a></li>
  
                                         {% else %}
                                         <li><a href="my_login">Login </a></li>
