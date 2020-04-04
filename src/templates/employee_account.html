@@ -73,11 +73,11 @@
                                         {% if user.is_authenticated %}
                                         <li> <p style="color: #ffffff"> Hello, {{user.first_name}}</p>  </li>
                                         <!-- <li><a href="#">My Account</a></li> -->
-                                        <li><a href="logout">Logout</a></li>
+                                        <li><a href="{% url 'logout' %}">Logout</a></li>
  
                                         {% else %}
-                                        <li><a href="my_login">Login </a></li>
-                                        <li><a href="sign_up">Register</a></li>
+                                        <!-- <li><a href="my_login">Login </a></li>
+                                        <li><a href="sign_up">Register</a></li> -->
  
                                         {% endif %}
                                    </ul>
@@ -92,7 +92,7 @@
                             <!-- Logo -->
                             <div class="col-xl-1 col-lg-1 col-md-1 col-sm-3">
                                 <div class="logo">
-                                  <a href="{% url 'home' %}"><img src="{% static 'img/logo/lib_logo.png' %}" alt=""></a>
+                                  <a href="#"><img src="{% static 'img/logo/lib_logo.png' %}" alt=""></a>
                                 </div>
                             </div>
                             <div class="col-xl-6 col-lg-8 col-md-7 col-sm-5">

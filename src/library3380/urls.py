@@ -23,5 +23,5 @@ urlpatterns = [
     path('my_login', include('login.urls')),
     path('sign_up', include('sign_up.urls')),
     path('book_list', include('book_list.urls')),
-    
+    path('employeePage', include('employee_account.urls')),
 ]
