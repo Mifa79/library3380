@@ -42,7 +42,7 @@ def sign_up(request):
             # user_email_num = [item[0] for item in cursor.fetchall()]
             cursor.execute("SELECT COUNT(email) FROM auth_user WHERE email = %s", [email])
             user_email_num = [item[0] for item in cursor.fetchall()]
-            if user_email_num[0] > 0:
+            if (email != '' and user_email_num[0] > 0):
                 messages.info(request, '**ERROR: Email already taken')
 
             if email == '':
