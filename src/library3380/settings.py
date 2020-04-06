@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'login.apps.LoginConfig',
     'sign_up.apps.SignUpConfig',
     'book_list.apps.BookListConfig',
+    'laptop_list.apps.LaptopListConfig',
     'employee_account.apps.EmployeeAccountConfig',
     'cart.apps.CartConfig',
     'user_account.apps.UserAccountConfig',    

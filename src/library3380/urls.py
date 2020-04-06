@@ -24,6 +24,7 @@ urlpatterns = [
     path('my_login', include('login.urls')),
     path('sign_up', include('sign_up.urls')),
     path('book_list', include('book_list.urls')),
+    path('laptop_list', include('laptop_list.urls')),
     path('employeePage', include('employee_account.urls')),
     path('cart', include('cart.urls')),
     path('userAccount', include('user_account.urls')),
