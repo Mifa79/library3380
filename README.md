@@ -1,7 +1,7 @@
 # Group-Project
 COSC 3380 - Database System
 
-1/ Creating Github directory
+#Creating Github directory
 Create an empty directory “project”
 In terminal, cd to “project”
 ```mkdir project3380```
@@ -12,7 +12,7 @@ cd to project 3380
 
 
 
-2/ Set-up virtual environment
+#Set-up virtual environment
 To create, cd OUTSIDE, next to "project3380" folder and run the following command:  
 ```python3.7 -m venv ENV```
 ENV is the name you choose for your virtual environment
@@ -32,13 +32,13 @@ To see if all the dependencies in requirements.txt are installed, run command:
 
 
 
-3/ Run the project
+#Run the project
 CD into project3380/src/
 ```python3.7 manage.py runserver```  
 Copy the link (similar to this http://127.0.0.1:8000/) and paste in a browser
 
 
-4/ Import the database
+#4/ Import the database
 Run command:  
 ```python manage.py shell```   
 If it doesnt work then exit the shell with CTRL+Z then run:  
