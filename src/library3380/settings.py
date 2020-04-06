@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'book_list.apps.BookListConfig',
     'employee_account.apps.EmployeeAccountConfig',
     'cart.apps.CartConfig',
+    'user_account.apps.UserAccountConfig',    
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
