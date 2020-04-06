@@ -37,4 +37,4 @@ Copy the link (similar to this http://127.0.0.1:8000/) and paste in a browser
 Run command:  
 ```python manage.py shell```   
 If it doesnt work then exit the shell with CTRL+Z then run:  
-```python manage.py migrate```  
+```python manage.py migrate``` 
