@@ -2,38 +2,44 @@ from itertools import chain
 from django.shortcuts import render, redirect
 from django.contrib import messages
 # from django.contrib.auth.models import User, auth
-from django.contrib.auth.models import Group, Permission
+from django.contrib.auth.models import Group
 # from .models import Link
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
+from django.db import connection
 
 
 def myLogin(request):
-    if request.method == "POST":
+    with connection.cursor() as cursor:
+        if request.method == "POST":
 
-        username = request.POST['username']
-        password = request.POST['password']
+            username = request.POST['username']
+            password = request.POST['password']
 
-        # the "aunthenticate" function was written using python and SQL in "authentication.py" in "library3380" folder 
-        user = authenticate(request, username=username, password=password)
-        userGroup = user.groups.all()[0]
+            # the "aunthenticate" function was written using python and SQL in "authentication.py" in "library3380" folder 
+            user = authenticate(request, username=username, password=password)
+            # userGroup = user.groups.all()[0]
 
-        if user is not None:
-            if(userGroup.name == "faculty" or userGroup.name == "student"):
-                login(request, user)
-                # print (request.user.is_authenticated)
-                return redirect('/my_login/accountPage')
+            if user is not None:
+                cursor.execute("SELECT user_type FROM sign_up_user WHERE username= %s", [username])
+                user_type = [item[0] for item in cursor.fetchall()]
+                print(user_type)
+
+                if(user_type[0] == "1" or user_type[0] == "2"):
+                    login(request, user)
+                    # print (request.user.is_authenticated)
+                    return redirect('/my_login/accountPage')
+                else:
+                    login(request, user)
+                    return redirect('/my_login/employeePage')
+
             else:
-                login(request, user)
-                return redirect('/my_login/employeePage')
+                messages.info(request, 'Invalid Credentials.')
+                return redirect('login')
 
         else:
-            messages.info(request, 'Invalid Credentials.')
-            return redirect('login')
-
-    else:
-        return render(request, 'login.html')
+            return render(request, 'login.html')
 
 
 

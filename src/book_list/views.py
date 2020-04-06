@@ -9,11 +9,9 @@ def book_list(request):
         # get all the book subjects
         cursor.execute("SELECT DISTINCT book_subject FROM book")
         subjects = [item[0] for item in cursor.fetchall()]
-        print(subjects)
         # get all the books in database
         cursor.execute("SELECT book_title, book_author FROM book")
         books = dictfetchall(cursor)
-        print(books)
         context = {'subjects': subjects, 'books': books}
     return render(request, 'book_list.html', context)
     

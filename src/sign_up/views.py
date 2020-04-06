@@ -12,7 +12,6 @@ def sign_up(request):
     with connection.cursor() as cursor:
 
         if request.method == 'POST':
-            print("loc oi", request.POST)
             first_name = request.POST['first_name']
             last_name = request.POST['last_name']
             username = request.POST['username']
@@ -30,7 +29,7 @@ def sign_up(request):
 
             # cursor.execute("SELECT COUNT(user_name) FROM user WHERE user_name = %s", [username])
             # user_name_num = [item[0] for item in cursor.fetchall()]
-            cursor.execute("SELECT COUNT(username) FROM auth_user WHERE username = %s", [username])
+            cursor.execute("SELECT COUNT(username) FROM sign_up_user WHERE username = %s", [username])
             user_name_num = [item[0] for item in cursor.fetchall()]
             if user_name_num[0] > 0:
                 messages.info(request, '**ERROR: Username already exists')
@@ -40,7 +39,7 @@ def sign_up(request):
 
             # cursor.execute("SELECT COUNT(user_email) FROM user WHERE user_email = %s", [email])
             # user_email_num = [item[0] for item in cursor.fetchall()]
-            cursor.execute("SELECT COUNT(email) FROM auth_user WHERE email = %s", [email])
+            cursor.execute("SELECT COUNT(email) FROM sign_up_user WHERE email = %s", [email])
             user_email_num = [item[0] for item in cursor.fetchall()]
             if (email != '' and user_email_num[0] > 0):
                 messages.info(request, '**ERROR: Email already taken')
@@ -66,18 +65,18 @@ def sign_up(request):
                 # cursor.execute("INSERT INTO user (fname, lname, user_name, user_email, user_password, user_type_ID)\
                 #                 VALUE (%s, %s, %s, %s, %s, %s)", [first_name, last_name, username, email, password1, user_type])
 
-                cursor.execute("INSERT INTO auth_user (first_name, last_name, username, email, password, is_superuser, is_staff, is_active, date_joined)\
-                                VALUE (%s, %s, %s, %s, %s, %s, %s, %s, %s)", [first_name, last_name, username, email, password, 0, 1, 1, date_joined])
+                cursor.execute("INSERT INTO sign_up_user (first_name, last_name, username, email, password, is_superuser, is_staff, is_active, date_joined, user_type)\
+                                VALUE (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", [first_name, last_name, username, email, password, 0, 0, 1, date_joined, user_type])
                 row = cursor.fetchall()
 
-                cursor.execute("SELECT id FROM auth_user WHERE username = %s", [username])
-                user_ID = cursor.fetchone()
+                # cursor.execute("SELECT id FROM sign_up_user WHERE username = %s", [username])
+                # user_ID = cursor.fetchone()
 
-                cursor.execute("SELECT id FROM auth_group WHERE name = %s", [user_type])
-                group_ID = cursor.fetchone()
+                # cursor.execute("SELECT id FROM auth_group WHERE name = %s", [user_type])
+                # group_ID = cursor.fetchone()
 
-                cursor.execute("INSERT INTO auth_user_groups (user_id, group_id) VALUE (%s, %s)", [user_ID, group_ID])
-                row = cursor.fetchall()
+                # cursor.execute("INSERT INTO auth_user_groups (user_id, group_id) VALUE (%s, %s)", [user_ID, group_ID])
+                # row = cursor.fetchall()
 
                 # user = User.objects.create_user(username=username, password=password1, email=email, first_name=first_name,
                 #                                     last_name=last_name)
