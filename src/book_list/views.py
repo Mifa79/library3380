@@ -10,7 +10,7 @@ def book_list(request):
         cursor.execute("SELECT DISTINCT book_subject FROM book")
         subjects = [item[0] for item in cursor.fetchall()]
         # get all the books in database
-        cursor.execute("SELECT book_title, book_author FROM book")
+        cursor.execute("SELECT ISBN, book_title, book_author FROM book")
         books = dictfetchall(cursor)
         context = {'subjects': subjects, 'books': books}
     return render(request, 'book_list.html', context)
@@ -22,13 +22,14 @@ def book_list_by_category(request, category):
         cursor.execute("SELECT DISTINCT book_subject FROM book")
         subjects = [item[0] for item in cursor.fetchall()]
         # get all the books in a particular subject
-        cursor.execute("SELECT book_title, book_author FROM book WHERE book_subject= %s", [category])
+        cursor.execute("SELECT ISBN, book_title, book_author FROM book WHERE book_subject= %s", [category])
         books = dictfetchall(cursor)
         context = {'subjects': subjects, 'books': books, "category": category}
     return render(request, 'book_list.html', context)
 
 
-def book_details_page(request, book_title):
+def book_details_page(request, ISBN):
+    print("Book ISBN is ", ISBN)
     return render(request, 'book_details.html')
 
 

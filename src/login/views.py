@@ -32,7 +32,7 @@ def myLogin(request):
 
             else:
                 messages.info(request, 'Invalid Credentials.')
-                return redirect('login')
+                return redirect('my_login')
 
         else:
             return render(request, 'login.html')
