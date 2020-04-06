@@ -1,9 +1,9 @@
 # Group-Project
 COSC 3380 - Database System
 
-**#Creating Github directory**
-Create an empty directory “project”
-In terminal, cd to “project”
+**#Creating Github directory**_
+Create an empty directory “project”_
+In terminal, cd to “project”_
 ```mkdir project3380```
 cd to project 3380
 ```git init```
