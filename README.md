@@ -1,7 +1,16 @@
 # Group-Project
 COSC 3380 - Database System
 
-**#Creating Github directory**  
+**#Database Preparation**  
+Install mysql Ver 8.0.19, and Mysql Workbench in your computer  
+Reset your mysql password to "rootroot"  
+Create a database name "database_project"  
+Import the database_project.sql file  
+
+**#Make sure to have python3.7, pip, virtualenv installed in your computer:**  
+You can install these in the command line
+
+**#Creating your local Github directory**  
 Create an empty directory “project”  
 In terminal, cd to “project”  
 ```mkdir project3380```  
@@ -28,13 +37,12 @@ This will install everything in the requirements.txt file
 To see if all the dependencies in requirements.txt are installed, run command:  
 ```pip freeze```  
 
+**#Import the database**  
+```python3.7 manage.py migrate```
+
 **#Run the project**  
 CD into project3380/src/  
 ```python3.7 manage.py runserver```  
 Copy the link (similar to this http://127.0.0.1:8000/) and paste in a browser  
 
-**#Import the database**  
-Run command:  
-```python manage.py shell```   
-If it doesnt work then exit the shell with CTRL+Z then run:  
-```python manage.py migrate```  
+  
