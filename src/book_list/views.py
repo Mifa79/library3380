@@ -17,7 +17,6 @@ def book_list(request):
     
 
 def book_list_by_category(request, category):
-    print(category)
     with connection.cursor() as cursor:
         # get all the book subjects
         cursor.execute("SELECT DISTINCT book_subject FROM book")
@@ -27,6 +26,10 @@ def book_list_by_category(request, category):
         books = dictfetchall(cursor)
         context = {'subjects': subjects, 'books': books, "category": category}
     return render(request, 'book_list.html', context)
+
+
+def book_details_page(request, book_title):
+    return render(request, 'book_details.html')
 
 
 def dictfetchall(cursor):
