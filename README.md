@@ -38,6 +38,7 @@ To see if all the dependencies in requirements.txt are installed, run command:
 ```pip freeze```  
 
 **#Import the database**  
+cd inside project3380/src/  
 ```python3.7 manage.py migrate```
 
 **#Run the project**  
