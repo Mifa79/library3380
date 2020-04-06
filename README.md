@@ -1,14 +1,14 @@
 # Group-Project
 COSC 3380 - Database System
 
-**#Creating Github directory**_
-Create an empty directory “project”_
-In terminal, cd to “project”_
-```mkdir project3380```
-cd to project 3380
-```git init```
-```git remote add project3380 https://github.com/Mifa79/library3380.git```
-```git pull project3380 master```
+**#Creating Github directory**  
+Create an empty directory “project”  
+In terminal, cd to “project”  
+```mkdir project3380```  
+cd to project 3380  
+```git init```  
+```git remote add project3380 https://github.com/Mifa79/library3380.git```  
+```git pull project3380 master```  
 
 **#Set-up virtual environment**
 To create, cd OUTSIDE, next to "project3380" folder and run the following command:  
