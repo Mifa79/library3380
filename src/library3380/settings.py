@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'sign_up.apps.SignUpConfig',
     'book_list.apps.BookListConfig',
     'employee_account.apps.EmployeeAccountConfig',
+    'cart.apps.CartConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
