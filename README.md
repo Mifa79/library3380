@@ -46,4 +46,19 @@ CD into project3380/src/
 ```python3.7 manage.py runserver```  
 Copy the link (similar to this http://127.0.0.1:8000/) and paste in a browser  
 
+
+**#Terminate and Re-run the project**  
+Everytime you terminate the project and want to re-run it:  
   
+Activate the virtual environment:  
+cd outside project3380  
+On Windows:  
+```ENV\Scripts\activate.bat```  
+On MAC:  
+```source ENV/bin/activate```  
+  
+CD into project3380/src/  
+```python3.7 manage.py runserver```  
+Copy the link (similar to this http://127.0.0.1:8000/) and paste in a browser  
+
+
