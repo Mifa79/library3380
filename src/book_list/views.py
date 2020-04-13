@@ -63,6 +63,18 @@ def book_details_page(request, ISBN):
             user_type_info = user_type_info[0]
             print("user_type_info is: ", user_type_info)
 
+            # count the number of active loan of the user
+            cursor.execute("SELECT COUNT(loan_ID) FROM loan where user_ID = %s and active=0", [user_ID])
+            num_of_active_loan = cursor.fetchone()
+            num_of_active_loan = num_of_active_loan[0]
+            print(num_of_active_loan)
+
+            # check if the user is not having any unpaid fine
+            cursor.execute("SELECT COUNT(fine_ID) FROM fine where user_ID = %s and paid=0", [user_ID])
+            num_of_unpaid_fine = cursor.fetchone()
+            num_of_unpaid_fine = num_of_unpaid_fine[0]
+            print(num_of_unpaid_fine)
+
 
         context = {'book_detail': book_detail, 'num_of_copies_available': num_of_copies_available}
     return render(request, 'book_details.html', context)
