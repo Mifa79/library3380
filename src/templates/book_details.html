@@ -164,7 +164,7 @@
 
         <!-- Latest Products Start -->
 
-        <!--================login_part Area =================-->
+        <!--================Product-Details Area =================-->
         <section class="login_part section_padding ">
             <div class="container">
                 <div class="row align-items-center">
@@ -184,38 +184,6 @@
                     <div class="col-lg-6 col-md-6">
                         <div class="login_part_form">
                             <div class="login_part_form_iner">
-                                    <!-- <table>
-                                        <tbody>
-                                            <tr height="40">
-                                                <td>Book Title:</td>
-                                                <td>{{book_detail.book_title}}</td>
-                                            </tr>
-                                            <tr height="40">
-                                                <td>ISBN:</td>
-                                                <td>{{book_detail.ISBN}}</td>
-                                            </tr>
-                                            <tr height="40">
-                                                <td>Author:</td>
-                                                <td>{{book_detail.book_author}}</td>
-                                            </tr>
-                                            <tr height="40">
-                                                <td>Category:</td>
-                                                <td>{{book_detail.book_subject}}</td>
-                                            </tr>
-                                            <tr height="40">
-                                                <td>Publisher:</td>
-                                                <td>{{book_detail.book_publisher}}</td>
-                                            </tr>
-                                            <tr height="40">
-                                                <td>Date of Publication:</td>
-                                                <td>{{book_detail.date_of_publication}}</td>
-                                            </tr>
-                                            <tr height="40">
-                                                <td>MSRP:</td>
-                                                <td>{{book_detail.MSRP}}</td>
-                                            </tr>
-                                        </tbody>
-                                    </table> -->
                                 <p><span style="width:200px; display:inline-block;">Book Title:</span>{{book_detail.book_title}}<p>
                                 <p><span style="width:200px; display:inline-block;">ISBN:</span>{{book_detail.ISBN}}<p>
                                 <p><span style="width:200px; display:inline-block;">Author:</span>{{book_detail.book_author}}<p>
@@ -223,15 +191,19 @@
                                 <p><span style="width:200px; display:inline-block;">Publisher:</span> {{book_detail.book_publisher}}<p>
                                 <p><span style="width:200px; display:inline-block;">Date of Publication:</span> {{book_detail.date_of_publication}}<p>
                                 <p><span style="width:200px; display:inline-block;">MSRP:</span>  $ {{book_detail.MSRP}}<p>
-                                {% if num_of_copies_available > 0 %}
-                                    <button type="submit" value="submit" class="btn_3">
-                                        Borrow
-                                    </button>
-                                {% else %}
-                                    <button type="submit" value="submit" class="btn_3">
-                                        Reserve
-                                    </button>
-                                {% endif %}
+
+                                <form class="row contact_form" action="book_details_page" method="POST">
+                                    {% if num_of_copies_available > 0 %}
+                                        <button type="submit" value="submit" class="btn_3" name="_borrow">
+                                            Borrow
+                                        </button>
+
+                                    {% else %}
+                                        <button type="submit" value="submit" class="btn_3" name="_reserve">
+                                            Reserve
+                                        </button>
+                                    {% endif %}
+                                </form>
 
 
                                 <!-- <form class="row contact_form" action="my_login" method="POST">
@@ -262,7 +234,7 @@
                 </div>
             </div>
         </section>
-        <!--================login_part end =================-->
+        <!--================Product-Details end =================-->
        
 
     </main>
