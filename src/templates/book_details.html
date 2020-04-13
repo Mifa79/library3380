@@ -8,7 +8,7 @@
     <title>eCommerce HTML-5 Template </title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="manifest" href="site.webmanifest">
+    <!-- <link rel="manifest" href="site.webmanifest"> -->
     <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/favicon.ico' %}">
 
     <!-- CSS here -->
@@ -184,13 +184,45 @@
                     <div class="col-lg-6 col-md-6">
                         <div class="login_part_form">
                             <div class="login_part_form_iner">
-                                <p>Book Title: <p>
-                                <p>ISBN: <p>
-                                <p>Author: <p>
-                                <p>Category: <p>
-                                <p>Publisher: <p>
-                                <p>Date of Publication: <p>
-                                <p>MSRP: <p>
+                                    <!-- <table>
+                                        <tbody>
+                                            <tr height="40">
+                                                <td>Book Title:</td>
+                                                <td>{{book_detail.book_title}}</td>
+                                            </tr>
+                                            <tr height="40">
+                                                <td>ISBN:</td>
+                                                <td>{{book_detail.ISBN}}</td>
+                                            </tr>
+                                            <tr height="40">
+                                                <td>Author:</td>
+                                                <td>{{book_detail.book_author}}</td>
+                                            </tr>
+                                            <tr height="40">
+                                                <td>Category:</td>
+                                                <td>{{book_detail.book_subject}}</td>
+                                            </tr>
+                                            <tr height="40">
+                                                <td>Publisher:</td>
+                                                <td>{{book_detail.book_publisher}}</td>
+                                            </tr>
+                                            <tr height="40">
+                                                <td>Date of Publication:</td>
+                                                <td>{{book_detail.date_of_publication}}</td>
+                                            </tr>
+                                            <tr height="40">
+                                                <td>MSRP:</td>
+                                                <td>{{book_detail.MSRP}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table> -->
+                                <p><span style="width:200px; display:inline-block;">Book Title:</span>{{book_detail.book_title}}<p>
+                                <p><span style="width:200px; display:inline-block;">ISBN:</span>{{book_detail.ISBN}}<p>
+                                <p><span style="width:200px; display:inline-block;">Author:</span>{{book_detail.book_author}}<p>
+                                <p><span style="width:200px; display:inline-block;">Category:</span>{{book_detail.book_subject}}<p>
+                                <p><span style="width:200px; display:inline-block;">Publisher:</span> {{book_detail.book_publisher}}<p>
+                                <p><span style="width:200px; display:inline-block;">Date of Publication:</span> {{book_detail.date_of_publication}}<p>
+                                <p><span style="width:200px; display:inline-block;">MSRP:</span>  $ {{book_detail.MSRP}}<p>
                                 <button type="submit" value="submit" class="btn_3">
                                     Borrow
                                 </button>
