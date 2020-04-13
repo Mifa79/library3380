@@ -223,9 +223,15 @@
                                 <p><span style="width:200px; display:inline-block;">Publisher:</span> {{book_detail.book_publisher}}<p>
                                 <p><span style="width:200px; display:inline-block;">Date of Publication:</span> {{book_detail.date_of_publication}}<p>
                                 <p><span style="width:200px; display:inline-block;">MSRP:</span>  $ {{book_detail.MSRP}}<p>
-                                <button type="submit" value="submit" class="btn_3">
-                                    Borrow
-                                </button>
+                                {% if num_of_copies_available > 0 %}
+                                    <button type="submit" value="submit" class="btn_3">
+                                        Borrow
+                                    </button>
+                                {% else %}
+                                    <button type="submit" value="submit" class="btn_3">
+                                        Reserve
+                                    </button>
+                                {% endif %}
 
 
                                 <!-- <form class="row contact_form" action="my_login" method="POST">

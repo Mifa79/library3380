@@ -42,7 +42,13 @@ def book_details_page(request, ISBN):
         # book_detail = cursor.fetchall()
         print("Book Details is: ", book_detail)
         # print(book_detail.book_title)
-        context = {'book_detail': book_detail}
+
+        # check number of available copies:
+        cursor.execute("SELECT COUNT(copy_ID) FROM copy where item_ID= %s and loaned=0 and damaged=0 and lost=0", [ISBN])
+        num_of_copies_available = cursor.fetchone()
+        num_of_copies_available = num_of_copies_available[0]
+        print("num_of_copies_available is: ", num_of_copies_available)
+        context = {'book_detail': book_detail, 'num_of_copies_available': num_of_copies_available}
     return render(request, 'book_details.html', context)
 
 
