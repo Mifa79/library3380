@@ -76,7 +76,7 @@
                                         <li><a href="{% url 'logout' %}">Logout</a></li>
  
                                         {% else %}
-                                        <li><a href="my_login">Login </a></li>
+                                        <li><a href="{% url 'my_login' %}">Login </a></li>
                                         <li><a href="{% url 'sign_up' %}">Register</a></li>
  
                                         {% endif %}
@@ -125,9 +125,9 @@
                                         </div>
                                     </li> -->
                                     <li>
-                                        <div class="shopping-card">
+                                        <!-- <div class="shopping-card">
                                             <a href="{% url 'cart' %}"><i class="fas fa-shopping-cart"></i></a>
-                                        </div>
+                                        </div> -->
                                     </li>
                                 </ul>
                             </div>
