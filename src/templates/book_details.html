@@ -184,24 +184,35 @@
                     <div class="col-lg-6 col-md-6">
                         <div class="login_part_form">
                             <div class="login_part_form_iner">
-                                <p><span style="width:200px; display:inline-block;">Book Title:</span>{{book_detail.book_title}}<p>
-                                <p><span style="width:200px; display:inline-block;">ISBN:</span>{{book_detail.ISBN}}<p>
-                                <p><span style="width:200px; display:inline-block;">Author:</span>{{book_detail.book_author}}<p>
-                                <p><span style="width:200px; display:inline-block;">Category:</span>{{book_detail.book_subject}}<p>
-                                <p><span style="width:200px; display:inline-block;">Publisher:</span> {{book_detail.book_publisher}}<p>
-                                <p><span style="width:200px; display:inline-block;">Date of Publication:</span> {{book_detail.date_of_publication}}<p>
-                                <p><span style="width:200px; display:inline-block;">MSRP:</span>  $ {{book_detail.MSRP}}<p>
+                                <form action="/book_borrow" method="POST">
+                                    {% csrf_token %}
+                                    <p><span style="width:200px; display:inline-block;">Book Title:</span>{{book_detail.book_title}}<p>
+                                    <p><span style="width:200px; display:inline-block;">ISBN:</span>{{book_detail.ISBN}}<p>
+                                    <p><span style="width:200px; display:inline-block;">Author:</span>{{book_detail.book_author}}<p>
+                                    <p><span style="width:200px; display:inline-block;">Category:</span>{{book_detail.book_subject}}<p>
+                                    <p><span style="width:200px; display:inline-block;">Publisher:</span> {{book_detail.book_publisher}}<p>
+                                    <p><span style="width:200px; display:inline-block;">Date of Publication:</span> {{book_detail.date_of_publication}}<p>
+                                    <p><span style="width:200px; display:inline-block;">MSRP:</span>  $ {{book_detail.MSRP}}<p>
+                                    
+                                    <input type="hidden" id="ISBN" name="ISBN" value={{book_detail.ISBN}}>
+                                    {% if user.is_authenticated %}
+                                        {% if num_of_copies_available > 0 %}
+                                            <button type="submit" value="submit" class="btn_3" name="_borrow">
+                                                Borrow
+                                            </button>
 
-                                <form class="row contact_form" action="book_details_page" method="POST">
-                                    {% if num_of_copies_available > 0 %}
-                                        <button type="submit" value="submit" class="btn_3" name="_borrow">
-                                            Borrow
-                                        </button>
+                                        {% else %}
+                                            <button type="submit" value="submit" class="btn_3" name="_reserve">
+                                                Reserve
+                                            </button>
+                                        {% endif %}
+
+                                        {% for message in messages %}
+                                            <li> {{message}} </li>
+                                        {% endfor %}
 
                                     {% else %}
-                                        <button type="submit" value="submit" class="btn_3" name="_reserve">
-                                            Reserve
-                                        </button>
+                                        <p style="font-weight: bold">Please login to borrow or reserve book.</p>
                                     {% endif %}
                                 </form>
 
