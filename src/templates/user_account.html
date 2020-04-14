@@ -162,28 +162,31 @@
         </div>
         <!-- slider Area End-->
 
-        <!-- Latest Products Start -->
+        <!-- User info start-->
         <section class="latest-product-area latest-padding">
             <div class="container">
                 <h3>Active loans:</h3>
                 {% for all_active_loan in all_active_loans %}
-                    <div style="margin-top: 40px; margin-bottom: 15px;">
-                        <p><span style="width:150px; display:inline-block;">Loan ID: </span>{{all_active_loan.loan_ID}}<p>
-                        <p><span style="width:150px; display:inline-block;">Item ID: </span>{{all_active_loan.item_ID}}<p>
-                        <p><span style="width:150px; display:inline-block;">Copy ID: </span>{{all_active_loan.item_copy_ID}}<p>
-                        <p><span style="width:150px; display:inline-block;">Borrow Date: </span>{{all_active_loan.borrow_date}}<p>
-                        <p><span style="width:150px; display:inline-block;">Return Due Date: </span>{{all_active_loan.return_due_date}}<p>
-                        <button type="submit" value="submit" class="btn_3" name="_return">
-                            Return
-                        </button>
-                        <hr></hr>
-                    </div>
+                    <form action="return_item" method="POST">
+                        {% csrf_token %}
+                        <div style="margin-top: 40px; margin-bottom: 15px;">
+                            <p><span style="width:150px; display:inline-block;">Loan ID: </span>{{all_active_loan.loan_ID}}<p>
+                            <p><span style="width:150px; display:inline-block;">Item ID: </span>{{all_active_loan.item_ID}}<p>
+                            <p><span style="width:150px; display:inline-block;">Copy ID: </span>{{all_active_loan.item_copy_ID}}<p>
+                            <p><span style="width:150px; display:inline-block;">Borrow Date: </span>{{all_active_loan.borrow_date}}<p>
+                            <p><span style="width:150px; display:inline-block;">Return Due Date: </span>{{all_active_loan.return_due_date}}<p>
+                            <button type="submit" value="submit" class="btn_3" name="_return">
+                                Return
+                            </button>
+                            <hr></hr>
+                        </div>
+                    </form>
                 {% endfor %}
                 
                
             </div>
         </section>
-        <!-- Latest Products End -->
+        <!-- Usesr info end -->
 
        
 
