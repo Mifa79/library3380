@@ -63,7 +63,7 @@ def book_borrow(request):
             if ((num_of_active_loan < borrow_amount_limit) and (num_of_unpaid_fine == 0)):
                 today = date.today()
                 print(today)
-                loan_due_date = today + timedelta(days=30)
+                loan_due_date = today + timedelta(days=borrow_time_limit)
                 print(loan_due_date)
 
                 # get the available copies from the database
