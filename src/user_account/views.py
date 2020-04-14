@@ -31,6 +31,13 @@ def userAccount(request):
         context = {'user': user, 'all_active_loans': all_active_loans}
         return render(request, 'user_account.html', context)
 
+
+# @login_required(login_url='/my_login')
+# def return_item(request):
+#     with connection.cursor() as cursor:
+#         if request.method == "POST":
+
+
 @login_required
 def logout(request):
     myLogout(request)

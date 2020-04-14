@@ -57,6 +57,8 @@ def book_borrow(request):
             num_of_unpaid_fine = num_of_unpaid_fine[0]
             print("num_of_unpaid_fine is: ", num_of_unpaid_fine)
 
+            print("book_list//" + ISBN)
+
             # if user is in good condition, create loan details
             if ((num_of_active_loan < borrow_amount_limit) and (num_of_unpaid_fine == 0)):
                 today = date.today()
@@ -82,12 +84,11 @@ def book_borrow(request):
 
                 messages.info(request, 'You have successfully borrowed this book. Check out My Account page for loan details.')
                 context = {'book_detail': book_detail, 'num_of_copies_available': num_of_copies_available}
-                return render(request, 'book_details.html', context)
-                # return redirect()
+                return redirect("book_list//" + ISBN)
             else:
                 messages.info(request, 'You have reached the borrow limit or currently have unpaid fines.')
                 context = {'book_detail': book_detail, 'num_of_copies_available': num_of_copies_available}
-                return render(request, 'book_details.html', context)
+                return redirect("book_list//" + ISBN)
 
 
 def dictfetchall(cursor):
