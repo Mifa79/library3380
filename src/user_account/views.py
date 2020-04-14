@@ -23,7 +23,12 @@ def userAccount(request):
         print("user type is: ", user_info['user_type'])
         user_type = user_info['user_type']
 
-        context = {'user': user}
+        # get all the active loan of the user
+        cursor.execute("SELECT loan_ID, item_ID, item_copy_ID, borrow_date, return_due_date, active FROM loan WHERE user_ID = %s", [user_ID])
+        all_active_loans = dictfetchall(cursor)
+        print("all_active_loan is: ", all_active_loans)
+
+        context = {'user': user, 'all_active_loans': all_active_loans}
         return render(request, 'user_account.html', context)
 
 @login_required
