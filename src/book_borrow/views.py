@@ -72,22 +72,22 @@ def book_borrow(request):
                 copy_to_be_loaned = copy_to_be_loaned['copy_ID']
                 print("copy_to_be_loaned is: ", copy_to_be_loaned)
 
+                # create loan details
                 cursor.execute("INSERT INTO loan (user_ID, item_ID, item_copy_ID, borrow_date, return_due_date, active) VALUES (%s, %s, %s, %s, %s, %s)", [user_ID, ISBN, copy_to_be_loaned, today, loan_due_date, 1])
                 row = cursor.fetchall()
-                messages.info(request, 'You have successfully borrowed this book. Check out My Account page for loan details.')
 
+                # change the status of the copy to “loaned: 1” in ‘copy’ table
+                cursor.execute("UPDATE copy SET loaned=1 WHERE item_ID = %s and copy_ID = %s", [ISBN, copy_to_be_loaned])
+                row = cursor.fetchall()
+
+                messages.info(request, 'You have successfully borrowed this book. Check out My Account page for loan details.')
                 context = {'book_detail': book_detail, 'num_of_copies_available': num_of_copies_available}
                 return render(request, 'book_details.html', context)
+                # return redirect()
             else:
                 messages.info(request, 'You have reached the borrow limit or currently have unpaid fines.')
                 context = {'book_detail': book_detail, 'num_of_copies_available': num_of_copies_available}
                 return render(request, 'book_details.html', context)
-
-
-
-
-
-
 
 
 def dictfetchall(cursor):
