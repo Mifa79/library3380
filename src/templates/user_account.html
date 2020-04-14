@@ -166,6 +166,10 @@
         <section class="latest-product-area latest-padding">
             <div class="container">
                 <h3>Active loans:</h3>
+                {% for message in messages %}
+                    <li> {{message}} </li>
+                {% endfor %}
+                
                 {% for all_active_loan in all_active_loans %}
                     <form action="return_item" method="POST">
                         {% csrf_token %}
@@ -175,6 +179,12 @@
                             <p><span style="width:150px; display:inline-block;">Copy ID: </span>{{all_active_loan.item_copy_ID}}<p>
                             <p><span style="width:150px; display:inline-block;">Borrow Date: </span>{{all_active_loan.borrow_date}}<p>
                             <p><span style="width:150px; display:inline-block;">Return Due Date: </span>{{all_active_loan.return_due_date}}<p>
+
+                            <input type="hidden" id="loan_ID" name="loan_ID" value={{all_active_loan.loan_ID}}>
+                            <input type="hidden" id="item_ID" name="item_ID" value={{all_active_loan.item_ID}}>
+                            <input type="hidden" id="copy_ID" name="copy_ID" value={{all_active_loan.item_copy_ID}}>
+                            <input type="hidden" id="return_due_date" name="return_due_date" value={{all_active_loan.return_due_date}}>
+
                             <button type="submit" value="submit" class="btn_3" name="_return">
                                 Return
                             </button>

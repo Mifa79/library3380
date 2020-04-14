@@ -24,7 +24,7 @@ def userAccount(request):
         user_type = user_info['user_type']
 
         # get all the active loan of the user
-        cursor.execute("SELECT loan_ID, item_ID, item_copy_ID, borrow_date, return_due_date, active FROM loan WHERE user_ID = %s", [user_ID])
+        cursor.execute("SELECT loan_ID, item_ID, item_copy_ID, borrow_date, return_due_date, active FROM loan WHERE user_ID = %s and active=1", [user_ID])
         all_active_loans = dictfetchall(cursor)
         print("all_active_loan is: ", all_active_loans)
 
