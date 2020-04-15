@@ -23,12 +23,18 @@ def userAccount(request):
         print("user type is: ", user_info['user_type'])
         user_type = user_info['user_type']
 
-        # get all the active loan of the user
+        # get all the active loans of the user
         cursor.execute("SELECT loan_ID, item_ID, item_copy_ID, borrow_date, return_due_date, active FROM loan WHERE user_ID = %s and active=1", [user_ID])
         all_active_loans = dictfetchall(cursor)
         print("all_active_loan is: ", all_active_loans)
 
-        context = {'user': user, 'all_active_loans': all_active_loans}
+        # get all the active fines of the user
+        cursor.execute("SELECT fine_ID, loan_ID, amount_due FROM fine WHERE user_ID = %s and paid=0", [user_ID])
+        all_unpaid_fines = dictfetchall(cursor)
+        print("all_unpaid_fines are: ", all_unpaid_fines)
+
+
+        context = {'user': user, 'all_active_loans': all_active_loans, 'all_unpaid_fines': all_unpaid_fines}
         return render(request, 'user_account.html', context)
 
 

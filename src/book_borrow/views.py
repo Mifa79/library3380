@@ -74,8 +74,10 @@ def book_borrow(request):
                 copy_to_be_loaned = copy_to_be_loaned['copy_ID']
                 print("copy_to_be_loaned is: ", copy_to_be_loaned)
 
+                item_type = "book"
+
                 # create loan details
-                cursor.execute("INSERT INTO loan (user_ID, item_ID, item_copy_ID, borrow_date, return_due_date, active) VALUES (%s, %s, %s, %s, %s, %s)", [user_ID, ISBN, copy_to_be_loaned, today, loan_due_date, 1])
+                cursor.execute("INSERT INTO loan (user_ID, user_type_ID, item_ID, item_copy_ID, item_type, borrow_date, return_due_date, active) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", [user_ID, user_type, ISBN, copy_to_be_loaned, item_type, today, loan_due_date, 1])
                 row = cursor.fetchall()
 
                 # change the status of the copy to “loaned: 1” in ‘copy’ table

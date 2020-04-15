@@ -164,12 +164,12 @@
 
         <!-- User info start-->
         <section class="latest-product-area latest-padding">
-            <div class="container">
-                <h3>Active loans:</h3>
+            <div class="container" style="margin-bottom: 70px;">
                 {% for message in messages %}
                     <li> {{message}} </li>
                 {% endfor %}
-                
+
+                <h3>Active loans:</h3>
                 {% for all_active_loan in all_active_loans %}
                     <form action="return_item" method="POST">
                         {% csrf_token %}
@@ -191,9 +191,30 @@
                             <hr></hr>
                         </div>
                     </form>
+                {% endfor %}                
+            </div>
+
+            <div class="container" style="margin-bottom: 70px;">
+                <h3>Unpaid fines:</h3>
+                {% for all_unpaid_fine in all_unpaid_fines %}
+                    <form action="pay_fine" method="POST">
+                        {% csrf_token %}
+                        <div style="margin-top: 40px; margin-bottom: 15px;">
+                            <p><span style="width:150px; display:inline-block;">Fine ID: </span>{{all_unpaid_fine.fine_ID}}<p>
+                            <p><span style="width:150px; display:inline-block;">Related Loan ID: </span>{{all_unpaid_fine.loan_ID}}<p>
+                            <p><span style="width:150px; display:inline-block;">Amount Due: </span>$ {{all_unpaid_fine.amount_due}}<p>
+
+                            <input type="hidden" id="fine_ID" name="fine_ID" value={{all_unpaid_fine.fine_ID}}>
+                            <input type="hidden" id="loan_ID" name="loan_ID" value={{all_unpaid_fine.loan_ID}}>
+                            <input type="hidden" id="amount_due" name="amount_due" value={{all_unpaid_fine.amount_due}}>
+
+                            <button type="submit" value="submit" class="btn_3" name="_return">
+                                Pay Fine
+                            </button>
+                            <hr></hr>
+                        </div>
+                    </form>
                 {% endfor %}
-                
-               
             </div>
         </section>
         <!-- Usesr info end -->
