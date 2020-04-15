@@ -39,7 +39,12 @@ def userAccount(request):
         print("all_unpaid_fines are: ", all_unpaid_fines)
 
 
-        context = {'user': user, 'all_active_loans': all_active_loans, 'all_unpaid_fines': all_unpaid_fines, 'all_past_loans': all_past_loans}
+        # get all the complete fines of the user
+        cursor.execute("SELECT fine_ID, loan_ID, amount_due FROM fine WHERE user_ID = %s and paid=1", [user_ID])
+        all_paid_fines = dictfetchall(cursor)
+        print("all_paid_fines are: ", all_paid_fines)
+
+        context = {'user': user, 'all_active_loans': all_active_loans, 'all_unpaid_fines': all_unpaid_fines, 'all_past_loans': all_past_loans, 'all_paid_fines': all_paid_fines}
         return render(request, 'user_account.html', context)
 
 

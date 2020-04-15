@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'user_account.apps.UserAccountConfig',   
     'book_borrow.apps.BookBorrowConfig',  
     'return_item.apps.ReturnItemConfig',  
+    'pay_fine.apps.PayFineConfig',  
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
