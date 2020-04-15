@@ -164,7 +164,7 @@
 
         <!-- User info start-->
         <section class="latest-product-area latest-padding">
-            <div class="container" style="margin-bottom: 70px;">
+            <div class="container" style="margin-bottom: 100px;">
                 {% for message in messages %}
                     <li> {{message}} </li>
                 {% endfor %}
@@ -185,6 +185,28 @@
                             <input type="hidden" id="copy_ID" name="copy_ID" value={{all_active_loan.item_copy_ID}}>
                             <input type="hidden" id="return_due_date" name="return_due_date" value={{all_active_loan.return_due_date}}>
 
+                            <p style="font-weight: 600; margin-top: 15px;">Please check if applied:</p>
+
+                            <div style="width:380px;">
+                                <div class="switch-wrap d-flex justify-content-between">
+                                    <div class="default-checkbox">
+                                        <input type="checkbox" id="damaged" name="damaged">
+                                        <label for="default-checkbox"></label>
+                                    </div>
+                                    <p>Is the item damaged at the time of return?</p>
+                                </div>
+                                    
+                                <div class="switch-wrap d-flex justify-content-between">
+                                    <div class="default-checkbox">
+                                        <input type="checkbox" id="lost" name="lost">
+                                        <label for="default-checkbox"></label>
+                                    </div>
+                                    <p>Was the item lost, and you cannot return it?</p>
+                                    
+                                </div>
+                            </div>
+                           
+
                             <button type="submit" value="submit" class="btn_3" name="_return">
                                 Return
                             </button>
@@ -194,7 +216,24 @@
                 {% endfor %}                
             </div>
 
-            <div class="container" style="margin-bottom: 70px;">
+            <div class="container" style="margin-bottom: 100px;">
+                <h3>Past loans:</h3>
+                {% for all_past_loan in all_past_loans %}
+                    <div style="margin-top: 40px; margin-bottom: 15px;">
+                        <p><span style="width:180px; display:inline-block;">Loan ID: </span>{{all_past_loan.loan_ID}}<p>
+                        <p><span style="width:180px; display:inline-block;">Item ID: </span>{{all_past_loan.item_ID}}<p>
+                        <p><span style="width:180px; display:inline-block;">Copy ID: </span>{{all_past_loan.item_copy_ID}}<p>
+                        <p><span style="width:180px; display:inline-block;">Borrow Date: </span>{{all_past_loan.borrow_date}}<p>
+                        <p><span style="width:180px; display:inline-block;">Num of Late Days: </span>{{all_past_loan.overdue_date_num}}<p>
+                        <p><span style="width:180px; display:inline-block;">Item Damaged: </span>{{all_past_loan.damaged}}<p>
+                        <p><span style="width:180px; display:inline-block;">Item Lost: </span>{{all_past_loan.lost}}<p>
+                        <p><span style="width:180px; display:inline-block;">Loan Status: </span>Complete<p>
+                        <hr></hr>
+                    </div>
+                {% endfor %}     
+            </div>
+
+            <div class="container" style="margin-bottom: 100px;">
                 <h3>Unpaid fines:</h3>
                 {% for all_unpaid_fine in all_unpaid_fines %}
                     <form action="pay_fine" method="POST">
@@ -216,6 +255,7 @@
                     </form>
                 {% endfor %}
             </div>
+
         </section>
         <!-- Usesr info end -->
 
