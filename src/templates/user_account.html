@@ -166,10 +166,10 @@
         <section class="latest-product-area latest-padding">
             <div class="container" style="margin-bottom: 100px;">
                 {% for message in messages %}
-                    <li> {{message}} </li>
+                    <ul style="color:royalblue"> {{message}} </ul>
                 {% endfor %}
 
-                <h3>Active loans:</h3>
+                <h3 style="margin-top: 50px;">Active loans:</h3>
                 {% for all_active_loan in all_active_loans %}
                     <form action="return_item" method="POST">
                         {% csrf_token %}
