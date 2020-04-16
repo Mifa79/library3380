@@ -43,10 +43,11 @@ def book_borrow(request):
             borrow_time_limit = user_type_info['borrow_time_limit']
             print("borrow_time_limit is: ", borrow_time_limit)
             borrow_amount_limit = user_type_info['borrow_amount_limit']
+            print("borrow_amount_limit is: ", borrow_amount_limit)
             reservation_amount_limit = user_type_info['reservation_amount_limit']
 
             # count the number of active loan of the user
-            cursor.execute("SELECT COUNT(loan_ID) FROM loan where user_ID = %s and active=0", [user_ID])
+            cursor.execute("SELECT COUNT(loan_ID) FROM loan where user_ID = %s and active=1", [user_ID])
             num_of_active_loan = cursor.fetchone()
             num_of_active_loan = num_of_active_loan[0]
             print("num_of_active_loan is ", num_of_active_loan)
@@ -88,7 +89,7 @@ def book_borrow(request):
                 context = {'book_detail': book_detail, 'num_of_copies_available': num_of_copies_available}
                 return redirect("book_list//" + ISBN)
             else:
-                messages.info(request, 'You have reached the borrow limit or currently have unpaid fines.')
+                messages.info(request, 'You have reached the borrow amount limit or currently have unpaid fines.')
                 context = {'book_detail': book_detail, 'num_of_copies_available': num_of_copies_available}
                 return redirect("book_list//" + ISBN)
 
