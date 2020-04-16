@@ -28,7 +28,7 @@ def laptop_list_by_category(request, category):
     return render(request, 'laptop_list.html', context)
 
 
-Laptop detail def laptop_details_page(request, lap_model):
+def laptop_details_page(request, lap_model):
     print("Laptop model is ", lap_model)
     with connection.cursor() as cursor:
         # get all the details of the laptop
