@@ -21,6 +21,7 @@ urlpatterns=[
     path('/manage_media/delete/', views.manage_media_delete, name='manage_media_delete'),
     path('/manage_media/edit/<id>/', views.manage_media_edit, name='manage_media_edit'),
     path('/manage_media/edit_select/', views.manage_media_edit_select, name='manage_media_edit_select'),
-    path('/manage_media/list', views.manage_media_list, name='manage_media_list'),
+    path('/manage_media/list/', views.manage_media_list, name='manage_media_list'),
+    path('/manage/list_all/', views.manage_list_all, name='manage_list_all'),
     path('logout', views.logout, name='logout'),
 ]

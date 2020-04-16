@@ -5,8 +5,8 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Media List</title>
-    <meta name="description" content="A list of media from our database.">
+    <title>Database Listing</title>
+    <meta name="description" content="All entries in our database.">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="manifest" href="site.webmanifest">
     <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/favicon.ico' %}">
@@ -154,14 +154,14 @@
                             <div class="hero-cap text-center">
                                 <div class="row d-flex justify-content-between">
                                     <div class="product-img">
-                                        <img src="{% static 'img/product/media-default.png' %}" alt="" width="200px" height="200px">
+                                        <img src="{% static 'img/product/book-default.png' %}" alt="" width="200px" height="200px">
                                     </div>
-                                    <h2><a href="{% url 'manage_media' %}">Media Management</a></h2>
+                                    <h2><a href="{% url 'manage_books' %}">Entire Database Listing</a></h2>
                                     <div class="product-img">
-                                        <img src="{% static 'img/product/media-default.png' %}" alt="" width="200px" height="200px">
+                                        <img src="{% static 'img/product/book-default.png' %}" alt="" width="200px" height="200px">
                                     </div>
                                 </div>
-                                <h3>Media Listing</h3>
+                                <!--<h3>Book Listing</h3>-->
                             </div>
                         </div>
                     </div>
@@ -170,19 +170,54 @@
         </div>
         <!-- slider Area End-->
 
-        <!-- LISTING MEDIA HERE -->
+        <!-- DELETING BOOKS HERE -->
         <br><br>
-        <table class="table">
+        <table class="table" id="books">
             <tr>
-                <th>ID</th>
-                <th>Title</th>
-                <th>Author</th>
-                <th>Publisher</th>
-                <th>Subject</th>
-                <th>Date of Publication</th>
-                <th>MSRP</th>
+                <th colspan="7">Books</th>
             </tr>
-            {% for row in tableRows %}
+            <tr>
+                {% for col in bookCols %}
+                <th>{{col}}</th>
+                {% endfor %}
+            </tr>
+            {% for row in bookRows %}
+            <tr>
+                {% for item in row %}
+                <td>{{item}}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </table>
+        <br><br><br>
+        <table class="table" id="laptops">
+            <tr>
+                <th colspan="5">Laptops</th>
+            </tr>
+            <tr>
+                {% for col in lapCols %}
+                <th>{{col}}</th>
+                {% endfor %}
+            </tr>
+            {% for row in lapRows %}
+            <tr>
+                {% for item in row %}
+                <td>{{item}}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </table>
+        <br><br><br>
+        <table class="table" id="media">
+            <tr>
+                <th colspan="7">Media</th>
+            </tr>
+            <tr>
+                {% for col in mediaCols %}
+                <th>{{col}}</th>
+                {% endfor %}
+            </tr>
+            {% for row in mediaRows %}
             <tr>
                 {% for item in row %}
                 <td>{{item}}</td>

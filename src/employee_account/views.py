@@ -5,7 +5,7 @@ from django.db import connection
 from django.shortcuts import render, redirect
 
 # Create your views here.
-@login_required(login_url='/my_login')
+@login_required
 def employeePage(request):
     user = request.user
     context = {'user': user}
@@ -273,6 +273,22 @@ def manage_media_list(request):
         tableRows = cursor.fetchall()
         context = {'tableRows':tableRows}
     return render(request, 'manage_media_list.html', context)
+
+
+@login_required(login_url='/my_login')
+def manage_list_all(request):
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT * FROM book")
+        bookRows = cursor.fetchall()
+        bookCols = [col[0] for col in cursor.description]
+        cursor.execute("SELECT * FROM laptop")
+        lapRows = cursor.fetchall()
+        lapCols = [col[0] for col in cursor.description]
+        cursor.execute("SELECT * FROM media")
+        mediaRows = cursor.fetchall()
+        mediaCols = [col[0] for col in cursor.description]
+        context = {'bookRows':bookRows, 'bookCols':bookCols, 'lapRows':lapRows, 'lapCols':lapCols, 'mediaRows':mediaRows, 'mediaCols':mediaCols}
+    return render(request, 'manage_list_all.html', context)
 
 
 @login_required
