@@ -28,9 +28,23 @@ def laptop_list_by_category(request, category):
     return render(request, 'laptop_list.html', context)
 
 
-def laptop_details_page(request, lap_model):
+Laptop detail def laptop_details_page(request, lap_model):
     print("Laptop model is ", lap_model)
-    return render(request, 'laptop_details.html')
+    with connection.cursor() as cursor:
+        # get all the details of the laptop
+        cursor.execute("SELECT lap_model, lap_OS, date_of_manufacture, MSRP, lap_manufacturer FROM laptop WHERE lap_model= %s", [lap_model])
+        laptop_details = dictfetchall(cursor)
+        laptop_detail = laptop_details[0]
+        print("Laptop Details is: ", laptop_detail)
+        
+        # check number of available copies:
+        cursor.execute("SELECT COUNT(copy_ID) FROM copy where item_ID= %s and loaned=0 and damaged=0 and lost=0", [lap_model])
+        num_of_copies_available = cursor.fetchone()
+        num_of_copies_available = num_of_copies_available[0]
+        print("num_of_copies_available is: ", num_of_copies_available)
+        
+        context = {'laptop_detail': laptop_detail, 'num_of_copies_available': num_of_copies_available}
+    return render(request, 'laptop_details.html', context)
 
 
 def dictfetchall(cursor):
