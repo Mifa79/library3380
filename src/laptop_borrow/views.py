@@ -14,8 +14,7 @@ def laptop_borrow(request):
             lap_model = request.POST['lap_model']
             # get all the details of the laptop
             cursor.execute(
-                "SELECT lap_model, lap_OS, date_of_manufacture, MSRP, lap_manufacturer FROM laptop WHERE lap_model= %s",
-                [lap_model])
+                "SELECT lap_model, lap_OS, date_of_manufacture, MSRP, lap_manufacturer FROM laptop WHERE lap_model= %s", [lap_model])
                 laptop_details = dictfetchall(cursor)
                 laptop_detail = laptop_details[0]
                 print("laptop Details is: ", laptop_detail)
@@ -67,7 +66,7 @@ def laptop_borrow(request):
                 if ((num_of_active_loan < borrow_amount_limit) and (num_of_unpaid_fine == 0)):
                     today = date.today()
                     print(today)
-                    loan_due_date = today + timedelta(days=30)
+                    loan_due_date = today + timedelta(days=borrow_time_limit)
                     print(loan_due_date)
                     
                     # get the available copies from the database
@@ -77,9 +76,11 @@ def laptop_borrow(request):
                     copy_to_be_loaned = available_copies[0]
                     copy_to_be_loaned = copy_to_be_loaned['copy_ID']
                     print("copy_to_be_loaned is: ", copy_to_be_loaned)
+
+                    item_type = "laptop"
                     
                     # create loan details
-                    cursor.execute("INSERT INTO loan (user_ID, item_ID, item_copy_ID, borrow_date, return_due_date, active) VALUES (%s, %s, %s, %s, %s, %s)",[user_ID, lap_model, copy_to_be_loaned, today, loan_due_date, 1])
+                    cursor.execute("INSERT INTO loan (user_ID, user_type_ID, item_ID, item_copy_ID, item_type, borrow_date, return_due_date, active) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", [user_ID, user_type, lap_model, copy_to_be_loaned, item_type, today, loan_due_date, 1])
                     row = cursor.fetchall()
                         
                     # change the status of the copy to “loaned: 1” in ‘copy’ table
@@ -87,11 +88,9 @@ def laptop_borrow(request):
                     row = cursor.fetchall()
                         
                     messages.info(request, 'You have successfully borrowed this laptop. Check out My Account page for loan details.')
-                    context = {'laptop_detail': laptop_detail, 'num_of_copies_available': num_of_copies_available}
-                        return redirect("laptop_list//" + lap_model)
+                    return redirect("laptop_list//" + lap_model)
                 else:
                     messages.info(request, 'You have reached the borrow limit or currently have unpaid fines.')
-                    context = {'laptop_detail': laptop_detail, 'num_of_copies_available': num_of_copies_available}
                     return redirect("laptop_list//" + lap_model)
 
 
