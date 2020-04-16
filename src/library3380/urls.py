@@ -25,6 +25,8 @@ urlpatterns = [
     path('sign_up', include('sign_up.urls')),
     path('book_list', include('book_list.urls')),
     path('book_borrow', include('book_borrow.urls')),
+    path('laptop_borrow', include('laptop_borrow.urls')),
+    path('media_borrow', include('media_borrow.urls')),
     path('return_item', include('return_item.urls')),
     path('pay_fine', include('pay_fine.urls')),
     path('laptop_list', include('laptop_list.urls')),

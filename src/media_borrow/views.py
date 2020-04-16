@@ -1,18 +1,10 @@
 from django.db import connection
-
 from django.shortcuts import render, redirect
-
 from django.contrib.auth import logout as myLogout
-
 from django.contrib.auth.decorators import login_required
-
 from datetime import date
-
 from datetime import datetime, timedelta
-
 from django.contrib import messages
-
-
 
 def media_borrow(request):
 

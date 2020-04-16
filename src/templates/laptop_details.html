@@ -179,7 +179,7 @@
                         <div class="col-lg-6 col-md-6">
                             <div class="login_part_form">
                                 <div class="login_part_form_iner">
-                                    <form action="/book_borrow" method="POST">
+                                    <form action="/laptop_borrow" method="POST">
                                         {% csrf_token %}
                                         <p><span style="width:200px; display:inline-block;">Laptop Model:</span>{{laptop_detail.lap_model}}<p>
                                         <p><span style="width:200px; display:inline-block;">Laptop OS:</span>{{laptop_detail.lap_OS}}<p>
@@ -205,7 +205,7 @@
                                             {% endfor %}
     
                                         {% else %}
-                                            <p style="font-weight: bold">Please login to borrow or reserve book.</p>
+                                            <p style="font-weight: bold">Please login to borrow or reserve laptop.</p>
                                         {% endif %}
                                     </form>
                                 </div>

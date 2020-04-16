@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'cart.apps.CartConfig',
     'user_account.apps.UserAccountConfig',   
     'book_borrow.apps.BookBorrowConfig',  
+    'laptop_borrow.apps.LaptopBorrowConfig',  
+    'media_borrow.apps.MediaBorrowConfig',  
     'return_item.apps.ReturnItemConfig',  
     'pay_fine.apps.PayFineConfig',  
     'django.contrib.admin',
