@@ -199,6 +199,40 @@
                         </div> -->
                 </div>
                 <!-- Nav Card -->
+                
+                <div class="col-lg-6 col-md-6">
+                    <div class="login_part_form">
+                        <div class="login_part_form_iner">
+                            <form action="/laptop_borrow" method="POST">
+                                {% csrf_token %}
+                                <p><span style="width:200px; display:inline-block;">Laptop Model:</span>{{laptop_detail.lap_model}}<p>
+                                <p><span style="width:200px; display:inline-block;">Laptop OS:</span>{{laptop_detail.lap_OS}}<p>
+                                <p><span style="width:200px; display:inline-block;">Date of manufacture:</span>{{laptop_detail.date_of_manufacture}}<p>
+                                <p><span style="width:200px; display:inline-block;">Laptop Manufacturer:</span>{{laptop_detail.lap_manufacturer}}<p>
+                                <p><span style="width:200px; display:inline-block;">MSRP:</span>  $ {{laptop_detail.MSRP}}<p>
+                                
+                                <input type="hidden" id="lap_model" name="lap_model" value={{laptop_detail.lap_model}}>
+                                    {% if user.is_authenticated %}
+                                    {% if num_of_copies_available > 0 %}
+                                    <button type="submit" value="submit" class="btn_3" name="_borrow">
+                                        Borrow
+                                    </button>
+                                    
+                                    {% else %}
+                                    <button type="submit" value="submit" class="btn_3" name="_reserve">
+                                        Reserve
+                                    </button>
+                                    {% endif %}
+                                    
+                                    {% for message in messages %}
+                                    <li> {{message}} </li>
+                                    {% endfor %}
+                                    
+                                    {% else %}
+                                    <p style="font-weight: bold">Please login to borrow or reserve laptop.</p>
+                                    {% endif %}
+                                    </form>
+                
                 <div class="tab-content" id="nav-tabContent">
                     <!-- card one -->
                     <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
