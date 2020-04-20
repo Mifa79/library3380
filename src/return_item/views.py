@@ -66,7 +66,7 @@ def return_item(request):
             if lost==1:
                 messages.info(request, "Loan " + loan_ID + " is now complete. However, since you lost the item, fine will be applied according to the market price of the item. Please check out My Account page for details.")
             if (damaged==1 and lost==0):
-                messages.info(request, "You have successfully returned the item. Loan " + loan_ID + " is now complete. However, since you damaged the item late, fine will be applied. Please check out My Account page for details.")
+                messages.info(request, "You have successfully returned the item. Loan " + loan_ID + " is now complete. However, since you damaged the item, fine will be applied. Please check out My Account page for details.")
 
             return redirect("userAccount")
         else:
