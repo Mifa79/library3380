@@ -1,1 +1,1 @@
-web: gunicorn library3380:app
+web: gunicorn library3380.wsgi  --log-file -
