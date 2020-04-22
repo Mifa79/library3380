@@ -135,7 +135,7 @@ USE_TZ = True
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
-STATICFILES_DIRS = ( os.path.join('static'), )
+STATICFILES_DIRS = ( os.path.join(BASE_DIR, 'static'), )
 
 AUTHENTICATION_BACKENDS = ('library3380.authentication.SettingsBackend',)
 AUTH_USER_MODEL = 'sign_up.User'
