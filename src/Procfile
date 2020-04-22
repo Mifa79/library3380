@@ -1,1 +1,1 @@
-web: gunicorn library3380.wsgi
+web: gunicorn project3380.wsgi
