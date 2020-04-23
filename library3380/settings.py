@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+import django_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -90,9 +91,11 @@ WSGI_APPLICATION = 'library3380.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'database_project',
-        'USER': 'root',
-        'PASSWORD': 'rootroot'
+        'NAME': os.environ['DB_NAME'],
+        'USER': os.environ['DB_USER'],
+        'PASSWORD': os.environ['DB_PASSWORD'],
+        'HOST' : os.environ['DB_HOST'],
+        'PORT' : os.environ['DB_PORT']
     }
 }
 
@@ -134,8 +137,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+print(BASE_DIR)
+print(STATIC_ROOT)
 STATIC_URL = '/static/'
-STATICFILES_DIRS = ( os.path.join(BASE_DIR, 'static'), )
+STATICFILES_DIRS = ( 
+    os.path.join(BASE_DIR, 'static'), 
+)
 
 AUTHENTICATION_BACKENDS = ('library3380.authentication.SettingsBackend',)
 AUTH_USER_MODEL = 'sign_up.User'
+
+django_heroku.settings(locals())

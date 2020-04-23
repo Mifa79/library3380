@@ -1,1 +1,1 @@
-web: gunicorn src.library3380.wsgi  --log-file -
+web: gunicorn library3380.wsgi  --log-file -
