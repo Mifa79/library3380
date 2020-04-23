@@ -72,7 +72,7 @@
                                    <ul>                                          
                                         {% if user.is_authenticated %}
                                         <li> <p style="color: #ffffff"> Hello, {{user.first_name}}</p>  </li>
-                                        <!-- <li><a href="#">My Account</a></li> -->
+                                        <li><a href="{% url 'userAccount' %}">My Account</a></li>
                                         <li><a href="{% url 'logout' %}">Logout</a></li>
  
                                         {% else %}
@@ -156,7 +156,7 @@
                                     <div class="product-img">
                                         <img src="{% static 'img/product/book-default.png' %}" alt="" width="200px" height="200px">
                                     </div>
-                                    <h2><a href="{% url 'manage_books' %}">Entire Database Listing</a></h2>
+                                    <h2>Entire Database Listing</h2>
                                     <div class="product-img">
                                         <img src="{% static 'img/product/book-default.png' %}" alt="" width="200px" height="200px">
                                     </div>
@@ -174,7 +174,7 @@
         <br><br>
         <table class="table" id="books">
             <tr>
-                <th colspan="7">Books</th>
+                <th colspan="8">Books</th>
             </tr>
             <tr>
                 {% for col in bookCols %}
@@ -192,7 +192,7 @@
         <br><br><br>
         <table class="table" id="laptops">
             <tr>
-                <th colspan="5">Laptops</th>
+                <th colspan="6">Laptops</th>
             </tr>
             <tr>
                 {% for col in lapCols %}
@@ -210,7 +210,7 @@
         <br><br><br>
         <table class="table" id="media">
             <tr>
-                <th colspan="7">Media</th>
+                <th colspan="8">Media</th>
             </tr>
             <tr>
                 {% for col in mediaCols %}

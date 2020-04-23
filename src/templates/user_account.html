@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>eCommerce HTML-5 Template </title>
+    <title>My Account</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="manifest" href="site.webmanifest">
@@ -155,8 +155,17 @@
                             <div class="hero-cap text-center">
                                 <h2>My Account</h2>
                                 {% if user.user_type == '3' %}
-                                <h3><a href="/employeePage/">Employee Page</a></h3>
+                                <!--<h3><a href="my_login/employeePage/">Employee Page</a></h3>-->
                                 <p>Welcome Employee!</p>
+                                <div class="container">
+                                    <!-- Main-menu -->
+                                    <div class="row d-flex justify-content-between">
+                                            <a href="{% url 'manage_books' %}"><h4>Manage Books</h4></a>
+                                        <a href="{% url 'manage_laptops' %}"><h4>Manage Laptops</h4></a>
+                                        <a href="{% url 'manage_media' %}"><h4>Manage Media</h4></a>
+                                        <a href="/employeePage/manage/list_all"><h4>Database Listing</h4></a>
+                                    </div>
+                                </div>
                                 {% endif %}
                             </div>
                         </div>

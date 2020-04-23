@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Book Management Home</title>
+    <title>Media Management Home</title>
     <meta name="description" content="Manage books in our collection.">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="manifest" href="site.webmanifest">
@@ -72,7 +72,7 @@
                                    <ul>                                          
                                         {% if user.is_authenticated %}
                                         <li> <p style="color: #ffffff"> Hello, {{user.first_name}}</p>  </li>
-                                        <!-- <li><a href="#">My Account</a></li> -->
+                                        <li><a href="{% url 'userAccount' %}">My Account</a></li>
                                         <li><a href="{% url 'logout' %}">Logout</a></li>
  
                                         {% else %}

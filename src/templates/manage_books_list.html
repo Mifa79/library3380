@@ -72,7 +72,7 @@
                                    <ul>                                          
                                         {% if user.is_authenticated %}
                                         <li> <p style="color: #ffffff"> Hello, {{user.first_name}}</p>  </li>
-                                        <!-- <li><a href="#">My Account</a></li> -->
+                                        <li><a href="{% url 'userAccount' %}">My Account</a></li>
                                         <li><a href="{% url 'logout' %}">Logout</a></li>
  
                                         {% else %}
@@ -181,6 +181,7 @@
                 <th>Subject</th>
                 <th>Date of Publication</th>
                 <th>MSRP</th>
+                <th>Total Number of Copies</th>
             </tr>
             {% for row in tableRows %}
             <tr>

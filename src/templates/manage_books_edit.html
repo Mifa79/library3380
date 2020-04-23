@@ -72,7 +72,7 @@
                                    <ul>                                          
                                         {% if user.is_authenticated %}
                                         <li> <p style="color: #ffffff"> Hello, {{user.first_name}}</p>  </li>
-                                        <!-- <li><a href="#">My Account</a></li> -->
+                                        <li><a href="{% url 'userAccount' %}">My Account</a></li>
                                         <li><a href="{% url 'logout' %}">Logout</a></li>
  
                                         {% else %}
@@ -233,6 +233,12 @@
                     <label for="book_MSRP">MSRP</label>
                     <div class="col-sm-10">
                         <input type="number" name="book_MSRP" id="book_MSRP" placeholder="{{cols.0.6}}"  value="{{cols.0.6}}" step="0.01" min="0" required/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="book_total_copy_num">Total Number of Copies</label>
+                    <div class="col-sm-10">
+                        <input type="number" name="book_total_copy_num" id="book_total_copy_num" placeholder="{{cols.0.7}}"  value="{{cols.0.7}}" step="1" min="0" required/>
                     </div>
                 </div>
                 <div class="form-group">

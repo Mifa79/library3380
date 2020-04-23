@@ -72,7 +72,7 @@
                                    <ul>                                          
                                         {% if user.is_authenticated %}
                                         <li> <p style="color: #ffffff"> Hello, {{user.first_name}}</p>  </li>
-                                        <!-- <li><a href="#">My Account</a></li> -->
+                                        <li><a href="{% url 'userAccount' %}">My Account</a></li>
                                         <li><a href="{% url 'logout' %}">Logout</a></li>
  
                                         {% else %}
@@ -221,6 +221,12 @@
                     <label for="lap_manufacturer">Manufacturer</label>
                     <div class="col-sm-10">
                         <input type="text" name="lap_manufacturer" id="lap_manufacturer" value="{{cols.0.4}}" placeholder="{{cols.0.4}}" maxlength="50" required/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="lap_total_copy_num">Total Number of Copies</label>
+                    <div class="col-sm-10">
+                    <input type="number" name="lap_total_copy_num" id="lap_total_copy_num" value="{{cols.0.5}}" placeholder={{cols.0.5}}" step="1" min="0" required/>
                     </div>
                 </div>
                 <div class="form-group">
