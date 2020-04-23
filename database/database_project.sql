@@ -110,6 +110,7 @@ CREATE TABLE `book` (
   `book_subject` varchar(50) DEFAULT NULL,
   `date_of_publication` date DEFAULT NULL,
   `MSRP` double DEFAULT NULL,
+  `total_copy_num` int DEFAULT NULL,
   PRIMARY KEY (`ISBN`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -120,7 +121,7 @@ CREATE TABLE `book` (
 
 LOCK TABLES `book` WRITE;
 /*!40000 ALTER TABLE `book` DISABLE KEYS */;
-INSERT INTO `book` VALUES ('0544824385','The Way Things Work Now','David Macaulay ','HMH Books for Young Readers','Engineering','2016-06-06',23.65),('0615991424','A Drawing Guide for Teachers and Students','Catherine V Holmes','Library Tales Publishing','Art','2014-03-07',14.39),('1250301696','The Silent Patient','Alex Michaelides','Celadon Books','Science Fiction','2019-02-05',16.19),('1250313074','Ninth House','Alex Stern','Flatiron Books','Science Fiction','2019-10-08',16.78),('1465473637','Science! (Knowledge Encyclopedias)','DK','DK Children','Science','2018-07-08',20.99),('1524759783','Recursion: A Novel','Blake Crouch','Crown','Science Fiction','2019-06-11',17.06),('B0192CTMYG','Harry Potter and the Sorceres Stone','J.K. Rowling','Pottermore Publishing','Science Fiction','2015-12-08',6.89),('BO7GVK5HW8','The Overdue Life of Amy Byler','Kelly Harms','Lake Union Publishing','Science Fiction','2019-05-01',5.99),('BO7NVD1276','In An Instant','Suzanne Redfearn','Lake Union Publishing','Science Fiction','2020-03-01',12.99),('EH898HOI','College Algebra','David Macaulay ','HMH','Math','2016-06-06',14.98),('JLII80970','Introduction to Statistic','Kelly Harms','Crown','Math','2020-03-01',12.88);
+INSERT INTO `book` VALUES ('0544824385','The Way Things Work Now','David Macaulay ','HMH Books for Young Readers','Engineering','2016-06-06',23.65,6),('0615991424','Have Fun with Water Color','Catherine V Holmes','Library Tales Publishing','Art','2014-03-07',14.39,1),('1250301696','The Silent Patient','Alex Michaelides','Celadon Books','Science Fiction','2019-02-05',16.19,2),('1250313074','Ninth House','Alex Stern','Flatiron Books','Science Fiction','2019-10-08',16.78,1),('1465473637','Science for All','DK','DK Children','Science','2018-07-08',20.99,1),('1524759783','Recursion: A Novel','Blake Crouch','Crown','Science Fiction','2019-06-11',17.06,1),('70778709','Beautiful Color Palettes','Catherine V Holmes','Lake Union Publishing','Art','2016-06-06',26.12,1),('87987968','The Art of Typography','Alex Stern','Library Tales Publishing','Art','2019-06-11',30.65,1),('B0192CTMYG','Harry Potter - Part 1','J.K. Rowling','Pottermore Publishing','Science Fiction','2015-12-08',6.89,1),('BO7GVK5HW8','The Overdue Life of Amy','Kelly Harms','Lake Union Publishing','Science Fiction','2019-05-01',5.99,1),('BO7NVD1276','In An Instant','Suzanne Redfearn','Lake Union Publishing','Science Fiction','2020-03-01',12.99,2),('EH898HOI','College Algebra','David Macaulay ','HMH','Math','2016-06-06',14.98,1),('JLII80970','Introduction to Statistic','Kelly Harms','Crown','Math','2020-03-01',12.88,1);
 /*!40000 ALTER TABLE `book` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -137,8 +138,9 @@ CREATE TABLE `copy` (
   `loaned` tinyint(1) NOT NULL,
   `damaged` tinyint(1) NOT NULL,
   `lost` tinyint(1) NOT NULL,
+  `item_type` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`copy_ID`,`item_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -147,9 +149,69 @@ CREATE TABLE `copy` (
 
 LOCK TABLES `copy` WRITE;
 /*!40000 ALTER TABLE `copy` DISABLE KEYS */;
-INSERT INTO `copy` VALUES (1,'0544824385',0,0,0),(2,'0544824385',0,0,0),(3,'0544824385',0,0,0),(4,'0544824385',0,0,0),(5,'0544824385',0,0,0),(6,'AIRij879',0,1,1),(7,'AIRij879',1,0,0),(8,'MAC3463',0,1,0),(9,'MAC3463',0,0,0),(10,'VIVO223',0,0,0),(11,'VIVO223',0,0,0),(12,'457457',0,0,1),(13,'457457',0,0,0),(14,'90970',0,1,0),(15,'90970',0,0,0),(16,'1250301696',0,0,0),(17,'1250301696',0,0,0),(18,'1250313074',0,0,0);
+INSERT INTO `copy` VALUES (1,'0544824385',0,0,0,'book'),(2,'0544824385',0,0,0,'book'),(3,'0544824385',0,0,0,'book'),(4,'0544824385',0,0,0,'book'),(5,'0544824385',0,0,0,'book'),(6,'AIRij879',0,0,0,'laptop'),(7,'AIRij879',0,0,0,'laptop'),(8,'MAC3463',0,0,0,'laptop'),(9,'MAC3463',0,0,0,'laptop'),(10,'VIVO223',0,0,0,'laptop'),(11,'VIVO223',0,0,0,'laptop'),(12,'457457',1,0,0,'media'),(13,'457457',0,0,0,'media'),(14,'90970',0,0,0,'media'),(15,'90970',0,0,0,'media'),(16,'1250301696',0,0,0,'book'),(17,'1250301696',0,0,0,'book'),(18,'1250313074',0,0,0,'book'),(19,'0615991424',0,0,0,'book'),(20,'1524759783',0,0,0,'book'),(21,'70778709',0,0,0,'book'),(22,'87987968',0,0,0,'book'),(23,'BO7NVD1276',0,0,0,'book'),(24,'BO7NVD1276',0,0,0,'book'),(25,'EH898HOI',0,0,0,'book'),(26,'JLII80970',0,0,0,'book'),(27,'HP9879',0,0,0,'laptop'),(28,'LENO879',0,0,0,'laptop'),(29,'MAC3463',0,0,0,'laptop'),(30,'1465473637',0,0,0,'book'),(31,'B0192CTMYG',0,0,0,'book'),(32,'BO7GVK5HW8',0,0,0,'book'),(33,'HP9709',0,0,0,'laptop'),(35,'0544824385',0,0,0,'book'),(36,'LENO879',0,0,0,'laptop'),(37,'364577',0,0,0,'media');
 /*!40000 ALTER TABLE `copy` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `copy.count_book_copy` AFTER INSERT ON `copy` FOR EACH ROW BEGIN
+	IF NEW.item_type = "book" THEN
+        UPDATE `database_project`.`book` SET total_copy_num = total_copy_num + 1
+        WHERE ISBN = NEW.item_ID;
+	END IF;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `copy.count_laptop_copy` AFTER INSERT ON `copy` FOR EACH ROW BEGIN
+	IF NEW.item_type = "laptop" THEN
+        UPDATE `database_project`.`laptop` SET total_copy_num = total_copy_num + 1
+        WHERE lap_model = NEW.item_ID;
+	END IF;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `copy.count_media_copy` AFTER INSERT ON `copy` FOR EACH ROW BEGIN
+	IF NEW.item_type = "media" THEN
+        UPDATE `database_project`.`media` SET total_copy_num = total_copy_num + 1
+        WHERE media_ID = NEW.item_ID;
+	END IF;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `django_admin_log`
@@ -259,7 +321,7 @@ CREATE TABLE `django_session` (
 
 LOCK TABLES `django_session` WRITE;
 /*!40000 ALTER TABLE `django_session` DISABLE KEYS */;
-INSERT INTO `django_session` VALUES ('hb4zhj480gx9afdfyziqnsvtolhbexac','NTJjYWMwNmUxZmFiNTY0Y2VjZmQ5OWNiODhmZWU1YTEwNGEzZjJlODp7Il9hdXRoX3VzZXJfaWQiOiIyIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoibGlicmFyeTMzODAuYXV0aGVudGljYXRpb24uU2V0dGluZ3NCYWNrZW5kIiwiX2F1dGhfdXNlcl9oYXNoIjoiZDQxZGQyYjRlOTEwOGZhNzQ5ZTFkNzgxMzNhODQzMTk0YmEzZTBiOCJ9','2020-04-28 19:43:58.418540');
+INSERT INTO `django_session` VALUES ('wz7w0kxng4c82of4fnx3xzd9dfvdaxzu','NzY2MDQzY2NlMzI0YTZlMjhjNDA0OTI1OWM2OTViNDQxOTY3OTViYzp7Il9hdXRoX3VzZXJfaWQiOiIxOCIsIl9hdXRoX3VzZXJfYmFja2VuZCI6ImxpYnJhcnkzMzgwLmF1dGhlbnRpY2F0aW9uLlNldHRpbmdzQmFja2VuZCIsIl9hdXRoX3VzZXJfaGFzaCI6IjM3ZDMzMmY4NjY3YTJkZjZjMjYwM2JlMGUzMjY2NWQ3ZDU1YWJkNTcifQ==','2020-04-30 22:33:23.153464');
 /*!40000 ALTER TABLE `django_session` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -279,7 +341,7 @@ CREATE TABLE `fine` (
   PRIMARY KEY (`fine_ID`),
   KEY `FK_sign_up_user_0_fine_idx` (`user_ID`),
   CONSTRAINT `FK_sign_up_user_0_fine` FOREIGN KEY (`user_ID`) REFERENCES `sign_up_user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -288,7 +350,7 @@ CREATE TABLE `fine` (
 
 LOCK TABLES `fine` WRITE;
 /*!40000 ALTER TABLE `fine` DISABLE KEYS */;
-INSERT INTO `fine` VALUES (24,25,2,11.825,1),(25,26,2,23.65,1),(26,30,2,800,1),(27,31,2,720,1),(28,33,2,5,1),(29,34,2,17.97,0);
+INSERT INTO `fine` VALUES (42,67,18,820,0),(43,66,18,11.825,0);
 /*!40000 ALTER TABLE `fine` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -305,6 +367,7 @@ CREATE TABLE `laptop` (
   `date_of_manufacture` date DEFAULT NULL,
   `MSRP` double DEFAULT NULL COMMENT 'MSRP IN DOLLARS',
   `lap_manufacturer` varchar(50) DEFAULT NULL,
+  `total_copy_num` int DEFAULT NULL,
   PRIMARY KEY (`lap_model`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -315,7 +378,7 @@ CREATE TABLE `laptop` (
 
 LOCK TABLES `laptop` WRITE;
 /*!40000 ALTER TABLE `laptop` DISABLE KEYS */;
-INSERT INTO `laptop` VALUES ('AIRij879','Mac','2018-06-05',800,'Apple'),('MAC3463','Mac','2018-06-05',1200,'Apple'),('VIVO223','Window','2018-06-05',750,'Samsung');
+INSERT INTO `laptop` VALUES ('AIRij879','Mac','2018-06-05',800,'Apple',2),('HP9709','Window','2018-06-05',360,'HP',1),('HP9879','Window','2018-06-05',700,'HP',1),('LENO879','Window','2018-06-05',820,'Lenovo',2),('MAC3463','Mac','2018-06-05',1200,'Apple',3),('VIVO223','Window','2018-06-05',750,'Samsung',2);
 /*!40000 ALTER TABLE `laptop` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -343,7 +406,7 @@ CREATE TABLE `loan` (
   KEY `FK_copy_0_loan_idx` (`item_copy_ID`),
   KEY `FK_sign_up_user_0_loan_idx` (`user_ID`),
   CONSTRAINT `FK_sign_up_user_0_loan` FOREIGN KEY (`user_ID`) REFERENCES `sign_up_user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -352,7 +415,7 @@ CREATE TABLE `loan` (
 
 LOCK TABLES `loan` WRITE;
 /*!40000 ALTER TABLE `loan` DISABLE KEYS */;
-INSERT INTO `loan` VALUES (25,2,'2','0544824385',4,'book','2020-04-15','2020-06-14',0,1,0,0),(26,2,'2','0544824385',3,'book','2020-04-15','2020-06-14',0,0,1,0),(27,2,'2','0544824385',5,'book','2020-04-15','2020-06-14',0,0,0,0),(28,2,'2','AIRij879',6,'laptop','2020-04-16','2020-06-15',0,0,0,0),(29,2,'2','AIRij879',6,'laptop','2020-04-16','2020-06-15',0,0,1,0),(30,2,'2','AIRij879',6,'laptop','2020-04-16','2020-06-15',0,0,1,0),(31,2,'2','MAC3463',8,'laptop','2020-04-16','2020-06-15',0,1,0,0),(32,2,'2','AIRij879',7,'laptop','2020-04-16','2020-06-15',NULL,NULL,NULL,1),(33,2,'2','457457',12,'media','2020-04-16','2020-06-15',0,0,1,0),(34,2,'2','90970',14,'media','2020-04-16','2020-06-15',0,1,0,0);
+INSERT INTO `loan` VALUES (66,18,'1','0544824385',1,'book','2020-04-16','2020-05-16',0,1,0,0),(67,18,'1','LENO879',28,'laptop','2020-04-16','2020-05-16',0,0,1,0),(68,18,'1','457457',12,'media','2020-04-16','2020-05-16',NULL,NULL,NULL,1);
 /*!40000 ALTER TABLE `loan` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -513,6 +576,7 @@ CREATE TABLE `media` (
   `media_subject` varchar(25) DEFAULT NULL,
   `media_date_publication` date DEFAULT NULL,
   `MSRP` double DEFAULT NULL COMMENT 'MSRP IN DOLLARS',
+  `total_copy_num` int DEFAULT NULL,
   PRIMARY KEY (`media_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -523,7 +587,7 @@ CREATE TABLE `media` (
 
 LOCK TABLES `media` WRITE;
 /*!40000 ALTER TABLE `media` DISABLE KEYS */;
-INSERT INTO `media` VALUES ('457457','Weird Science (Flashback Edition)','Anthony Michael Hall',NULL,'Science','2018-07-06',5),('90970','A Smithsonian Tour through American History','Richard Kurin','The Great Courses','History','2017-06-08',29.95);
+INSERT INTO `media` VALUES ('364577','Sacrify','Elton John','Elton John','Music','2017-06-08',16.69,1),('457457','The Circle of Life','Anthony Michael Hall','MAC3463','Science','2018-07-06',12.54,2),('46477','Alaska Wildlife','Sandy Hugman','The Rainforest','Wildlife','2018-07-06',15.45,0),('869686','Spirit of Time','Esta Tonne','Esta Tonne','Music','2019-07-06',12.96,0),('90970','American History','Richard Kurin','The Great Courses','History','2017-06-08',14.69,2),('9868756','Don\'t Know Why','Norah Jones','The Hall','Music','2018-07-06',20.34,0);
 /*!40000 ALTER TABLE `media` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -583,7 +647,7 @@ CREATE TABLE `sign_up_user` (
   UNIQUE KEY `username` (`username`),
   KEY `fk_user_type_info_0_sign_up_user_idx` (`user_type`),
   CONSTRAINT `fk_user_type_info_0_sign_up_user` FOREIGN KEY (`user_type`) REFERENCES `user_type_info` (`user_type_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -592,7 +656,7 @@ CREATE TABLE `sign_up_user` (
 
 LOCK TABLES `sign_up_user` WRITE;
 /*!40000 ALTER TABLE `sign_up_user` DISABLE KEYS */;
-INSERT INTO `sign_up_user` VALUES (1,'pbkdf2_sha256$180000$2C2gy88S16TY$jWY9sDwL5kOp+PpvE5ewsF2EUsVTXbwqqpEwuVs6qa4=','2020-04-06 20:44:44.929573',0,'emp1','Sarah','L','sarah@gmail.com',0,1,'2020-04-06 01:23:34.288219','3'),(2,'pbkdf2_sha256$180000$v2XDSApnc8dO$Y9PiluIzSiKtHSZ4SqHGuRYs0cIMS+gMD/9nsNvf2bc=','2020-04-14 19:43:58.416734',0,'facu1','Kevin','B','kevin@gmail.com',0,1,'2020-04-06 02:59:03.979710','2'),(3,'pbkdf2_sha256$180000$HfrvDMOX4NuL$FBpeTSOVIDQzMIcu+ngQscvlYBzCC2bg6wGaBCfMS/s=','2020-04-14 03:13:04.578866',0,'stud1','John','L','john@gmail.com',0,1,'2020-04-06 03:08:21.725225','1'),(4,'pbkdf2_sha256$180000$bDbfp8Fukz2J$H/+00goLdk2zqMQ/XWrld1WG0cup9NSn0G6UEGeBN18=','2020-04-06 21:36:25.586749',0,'facu2','Tom','H','tom@gmail.com',0,1,'2020-04-06 21:36:14.720820','2'),(5,'pbkdf2_sha256$180000$DLR9VuCrGzwx$/4Ukj5dCqiI+BC8844QvjCeq8LxKIUCJVFY240ua9nA=','2020-04-06 22:32:08.569388',0,'emp2','Kristina','B','krist@gmail.com',0,1,'2020-04-06 21:37:49.348869','3'),(6,'pbkdf2_sha256$180000$V5zTSORGSW2m$eQC0jpOs/2ZieH8n1DXizTS3jf0572G8ryUU/FNG9i4=','2020-04-06 23:13:06.365071',0,'emp3','Annie','N','annie@gmail.com',0,1,'2020-04-06 23:11:26.564002','3'),(7,'pbkdf2_sha256$180000$ih5cnJZemVdt$E2hpNNWO1YYAeDAtw0aDXUN9dvJQjTFfzERKPiQ8uKY=','2020-04-06 23:15:10.341228',0,'stud3','Johnson','B','johson@gmail.com',0,1,'2020-04-06 23:14:43.909894','1');
+INSERT INTO `sign_up_user` VALUES (18,'pbkdf2_sha256$180000$2cRo7MDbOpbZ$ZrDOGdoMVHuhJRA1JNVN7WEE4qfnGqx3JCQu/yBYS4M=','2020-04-16 22:33:23.151771',0,'stud1','John','Doe','stud1@gmail.com',0,1,'2020-04-16 22:31:44.561677','1');
 /*!40000 ALTER TABLE `sign_up_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -676,7 +740,7 @@ CREATE TABLE `user_type_info` (
 
 LOCK TABLES `user_type_info` WRITE;
 /*!40000 ALTER TABLE `user_type_info` DISABLE KEYS */;
-INSERT INTO `user_type_info` VALUES ('1','student',30,5,3,0.5),('2','faculty',60,10,5,0.6),('3','employee',NULL,NULL,NULL,NULL);
+INSERT INTO `user_type_info` VALUES ('1','student',30,3,3,0.5),('2','faculty',60,4,5,0.6),('3','employee',NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `user_type_info` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -689,4 +753,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-15 23:41:24
+-- Dump completed on 2020-04-20 16:01:58
