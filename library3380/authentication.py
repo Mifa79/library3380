@@ -4,6 +4,7 @@ from django.contrib.auth.hashers import check_password
 # from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
 from django.db import connection
+from django.contrib.auth.hashers import check_password
 
 User = get_user_model()
 
@@ -13,10 +14,13 @@ class SettingsBackend(BaseBackend):
         User = get_user_model()
         
         with connection.cursor() as cursor:
-            login_valid = cursor.execute("SELECT EXISTS(SELECT * from sign_up_user WHERE username= %s and password= %s)", [username, password])
+            cursor.execute("SELECT * FROM sign_up_user WHERE username= %s", [username])
+            user = cursor.fetchone()
+            print(user)
+            login_valid = check_password(password, user[1])
             if login_valid:
+                print("inside valid")
                 try:
-                    cursor.execute("SELECT * FROM sign_up_user WHERE username= %s", [username])
                     user = User.objects.get(username=username)
 
                 except User.DoesNotExist:

@@ -9,7 +9,9 @@ from django.contrib.auth import authenticate, login
 from django.db import connection
 
 
+
 def myLogin(request):
+    print("this is login page")
     with connection.cursor() as cursor:
         if request.method == "POST":
 
