@@ -27,5 +27,6 @@ urlpatterns=[
     path('/reports/UserSignupsGraphWeek/', views.UserSignupDateGraphWeek, name='UserSignupDateGraphWeek'),
     path('/reports/UserSignupsGraphMonth/', views.UserSignupDateGraphMonth, name='UserSignupDateGraphMonth'),
     path('/reports/LoanResults/', views.loanResults, name='LoanResults'),
+    path('/reports/SubjectAmounts/', views.subjectAmounts, name='SubjectAmounts'),
     path('logout', views.logout, name='logout')
 ]

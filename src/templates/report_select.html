@@ -186,7 +186,7 @@
                 {% csrf_token %}
                 <!--<div class="container">-->
                 <table class="table">
-                    <caption>Select report to display then press the 'Generate' button below.</caption>
+                    <caption>Select a report to display then press the 'Generate' button below.</caption>
                     <tr>
                         <th>Select</th>
                         <th>Name</th>
@@ -202,9 +202,16 @@
                         <td>User Signups Graph (Past Month)</td>
                         <td>Shows a column graph of user signups within the past month.</td>
                     </tr>
-                    <td><input type="radio" name="LoanResultsAll" id="LoanResultsAll" value="LoanResultsAll"/></td>
+                    <tr>
+                        <td><input type="radio" name="LoanResultsAll" id="LoanResultsAll" value="LoanResultsAll"/></td>
                         <td>All Loan Results</td>
                         <td>Shows a pie graph of all loan results; damaged, lost, overdue, or returned properly.</td>
+                    </tr>
+                    <tr>
+                        <td><input type="radio" name="SubjectAmounts" id="SubjectAmounts" value="SubjectAmounts"/></td>
+                        <td>Media and Book Amount by Subject</td>
+                        <td>Shows a column graph showing the amounts of media and books by subject.</td>
+                    </tr>
                 </table>
                 <div class="form-group">
                     <button class="send-btn" type="submit" form="report-select-form" value="Submit">Generate</button>
