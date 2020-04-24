@@ -5,8 +5,8 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Select Media to Edit</title>
-    <meta name="description" content="Select media to edit.">
+    <title>Add Media Copies</title>
+    <meta name="description" content="Add new media to our collection.">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="manifest" href="site.webmanifest">
     <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/favicon.ico' %}">
@@ -107,7 +107,7 @@
                                         </ul>
                                     </nav>
                                 </div>
-                            </div> 
+                            </div>
                             <div class="col-xl-5 col-lg-3 col-md-3 col-sm-3 fix-card">
                                 <ul class="header-right f-right d-none d-lg-block d-flex justify-content-between">
                                     <!-- <li class="d-none d-xl-block">
@@ -161,8 +161,7 @@
                                         <img src="{% static 'img/product/media-default.png' %}" alt="" width="200px" height="200px">
                                     </div>
                                 </div>
-                                <h3>Edit Media</h3>
-                                <h6>Select Media from the Table to Edit</h6>
+                                <h3>Add Media Copies</h3>
                             </div>
                         </div>
                     </div>
@@ -190,37 +189,28 @@
                     <form method="POST" class="post-form" action="#">
                     -->
         <br><br>
-            <form method="GET" class="media-edit-form" id="media-edit-form" action="" onsubmit="">
-                {% csrf_token %}
-                <!--<div class="container">-->
-                <table class="table">
-                    <caption>Select media to edit then press the 'Edit' button below.</caption>
-                    <tr>
-                        <th>Select</th>
-                        <th>ID</th>
-                        <th>Title</th>
-                        <th>Author</th>
-                        <th>Publisher</th>
-                        <th>Subject</th>
-                        <th>Date of Publication</th>
-                        <th>MSRP</th>
-                        <th>Total Number of Copies</th>
-                    </tr>
-                    {% for row in tableRows %}
-                    <tr>
-                        <td><input type="radio" name="media-to-edit-radio" id="media-to-edit-radio" value="{{ row.0 }}"/></td>
-                        {% for item in row %}
-                        <td>{{item}}</td>
-                        {% endfor %}
-                    </tr>
-                    {% endfor %}
-                </table>
-                <div class="form-group">
-                    <button class="send-btn" type="submit" form="media-edit-form" value="Submit">Edit</button>
-                </div>
-                <!--</div>-->
 
-            </form>
+            <form method="POST" class="media_form" id="media-form" action="" onsubmit="alert('Media added.')">
+                    {% csrf_token %}
+                    <div class="container">
+                        <div class="form-group">
+                            <label for="media_ID">ID</label>
+                            <div class="col-sm-10">
+                            <input type="text" name="media_ID" id="media_ID" value="" placeholder="Media ID" maxlength="50" required/>
+                            </div>
+                        </div>
+                       
+                        <div class="form-group">
+                            <label for="media_copy_num">Total Number of Copies</label>
+                            <div class="col-sm-10">
+                            <input type="number" name="media_copy_num" id="media_copy_num" placeholder="0" step="1" min="0" required/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button class="send-btn" type="submit" form="media-form" value="Submit">Submit</button>
+                        </div>
+                    </div>
+                </form>
         <!-- Latest Products End -->
     <br><br><br><br><br>
     </main>

@@ -38,6 +38,60 @@ def manage_books_add(request):
                     pass
     return render(request, 'manage_books_add.html', context)
 
+
+
+@login_required(login_url='/my_login')
+def manage_books_add_copies(request):
+    if request.method == 'POST':
+        isbn = request.POST.get('book_isbn')
+        num = request.POST.get('book_copy_num')
+        count = 0
+        with connection.cursor() as cursor:
+            while (count < int(num)):
+                count = count + 1
+                cursor.execute("INSERT INTO copy (item_ID, loaned, damaged, lost, item_type) VALUES (%s, %s, %s, %s, %s)", [isbn, 0, 0, 0, "book"])
+
+        return render(request, 'manage_books_add_copies.html')
+
+    else:
+        return render(request, 'manage_books_add_copies.html')
+
+
+@login_required(login_url='/my_login')
+def manage_laptops_add_copies(request):
+    if request.method == 'POST':
+        lap_model = request.POST.get('lap_model')
+        num = request.POST.get('laptop_copy_num')
+        count = 0
+        with connection.cursor() as cursor:
+            while (count < int(num)):
+                count = count + 1
+                cursor.execute("INSERT INTO copy (item_ID, loaned, damaged, lost, item_type) VALUES (%s, %s, %s, %s, %s)", [lap_model, 0, 0, 0, "laptop"])
+
+        return render(request, 'manage_laptops_add_copies.html')
+
+    else:
+        return render(request, 'manage_laptops_add_copies.html')
+
+
+@login_required(login_url='/my_login')
+def manage_media_add_copies(request):
+    if request.method == 'POST':
+        media_ID = request.POST.get('media_ID')
+        num = request.POST.get('media_copy_num')
+        count = 0
+        with connection.cursor() as cursor:
+            while (count < int(num)):
+                count = count + 1
+                cursor.execute("INSERT INTO copy (item_ID, loaned, damaged, lost, item_type) VALUES (%s, %s, %s, %s, %s)", [media_ID, 0, 0, 0, "media"])
+
+        return render(request, 'manage_media_add_copies.html')
+
+    else:
+        return render(request, 'manage_media_add_copies.html')
+
+
+
 @login_required(login_url='/my_login')
 def manage_books_delete(request):
     with connection.cursor() as cursor:
@@ -127,6 +181,7 @@ def manage_laptops_add(request):
                     MSRP = request.POST.get('lap_MSRP')
                     cursor.execute("UPDATE laptop SET MSRP = %s WHERE lap_model = %s", [MSRP, model])
     return render(request, 'manage_laptops_add.html', context)
+
 
 @login_required(login_url='/my_login')
 def manage_laptops_delete(request):

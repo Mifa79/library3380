@@ -5,8 +5,8 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Select Media to Edit</title>
-    <meta name="description" content="Select media to edit.">
+    <title>Add Book Copies</title>
+    <meta name="description" content="Add a book to our collection.">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="manifest" href="site.webmanifest">
     <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/favicon.ico' %}">
@@ -72,7 +72,6 @@
                                    <ul>                                          
                                         {% if user.is_authenticated %}
                                         <li> <p style="color: #ffffff"> Hello, {{user.first_name}}</p>  </li>
-                                        
                                         <li><a href="{% url 'logout' %}">Logout</a></li>
  
                                         {% else %}
@@ -154,15 +153,14 @@
                             <div class="hero-cap text-center">
                                 <div class="row d-flex justify-content-between">
                                     <div class="product-img">
-                                        <img src="{% static 'img/product/media-default.png' %}" alt="" width="200px" height="200px">
+                                        <img src="{% static 'img/product/book-default.png' %}" alt="" width="200px" height="200px">
                                     </div>
-                                    <h2><a href="{% url 'manage_media' %}">Media Management</a></h2>
+                                    <h2><a href="{% url 'manage_books' %}">Book Management</a></h2>
                                     <div class="product-img">
-                                        <img src="{% static 'img/product/media-default.png' %}" alt="" width="200px" height="200px">
+                                        <img src="{% static 'img/product/book-default.png' %}" alt="" width="200px" height="200px">
                                     </div>
                                 </div>
-                                <h3>Edit Media</h3>
-                                <h6>Select Media from the Table to Edit</h6>
+                                <h3>Add Book Copies</h3>
                             </div>
                         </div>
                     </div>
@@ -190,36 +188,30 @@
                     <form method="POST" class="post-form" action="#">
                     -->
         <br><br>
-            <form method="GET" class="media-edit-form" id="media-edit-form" action="" onsubmit="">
-                {% csrf_token %}
-                <!--<div class="container">-->
-                <table class="table">
-                    <caption>Select media to edit then press the 'Edit' button below.</caption>
-                    <tr>
-                        <th>Select</th>
-                        <th>ID</th>
-                        <th>Title</th>
-                        <th>Author</th>
-                        <th>Publisher</th>
-                        <th>Subject</th>
-                        <th>Date of Publication</th>
-                        <th>MSRP</th>
-                        <th>Total Number of Copies</th>
-                    </tr>
-                    {% for row in tableRows %}
-                    <tr>
-                        <td><input type="radio" name="media-to-edit-radio" id="media-to-edit-radio" value="{{ row.0 }}"/></td>
-                        {% for item in row %}
-                        <td>{{item}}</td>
-                        {% endfor %}
-                    </tr>
-                    {% endfor %}
-                </table>
-                <div class="form-group">
-                    <button class="send-btn" type="submit" form="media-edit-form" value="Submit">Edit</button>
-                </div>
-                <!--</div>-->
 
+            <form method="POST" class="book-form" id="book-form" action="" onsubmit="alert('All New Book Copies Added.')">
+                {% csrf_token %}
+                <div class="container">
+
+                    <div class="form-group">
+                        <label for="book_isbn">Book ISBN </label>
+                        <div class="col-sm-10">
+                        <input type="text" name="book_isbn" id="book_isbn" value="" placeholder="ISBN" maxlength="50" required/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                            <label for="book_copy_num">Total Number of Copies</label>
+                            <div class="col-sm-10">
+                            <input type="number" name="book_copy_num" id="book_copy_num" value="" placeholder="0" step="1" min="0" required/>
+                            </div>
+                    </div>
+                
+                    <div class="form-group">
+                        <button class="send-btn" type="submit" form="book-form" value="submit">Submit</button>
+                    </div>
+
+                </div>
             </form>
         <!-- Latest Products End -->
     <br><br><br><br><br>
