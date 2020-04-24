@@ -307,7 +307,7 @@ def report_select(request):
             return redirect('/employeePage/reports/UserSignupsGraphWeek/')
         elif request.POST.get('UserSignupsGraphMonth'):
             return redirect('/employeePage/reports/UserSignupsGraphMonth/')
-        elif request.POST.get('LoanResults'):
+        elif request.POST.get('LoanResultsAll'):
             return redirect('/employeePage/reports/LoanResults/')
     return render(request, 'report_select.html')
     # If statement for POST for report type
@@ -317,35 +317,37 @@ def report_select(request):
 def UserSignupDateGraphWeek(request):
     days = []
     date = datetime.datetime.now()
-    for i in range(7, 0, -1):
+    i = 7
+    while i >= 0:
         day = datetime.datetime(date.year, date.month, date.day - i)
         days.append(day.strftime('%x'))
-    days.append(date.strftime('%x'))
+        i -= 1
     categories = days
     print("CATEGORIES", categories)
     with connection.cursor() as cursor:
         try:
             userCount = []
             userInfo = []
-            userInfoCols = []
-            date = datetime.datetime.now()
-            for i in range(7):
-                day = datetime.datetime(date.year, date.month, date.day - i)
+            dateDate = datetime.date.today()
+            for i in range(7, -1, -1):
+                day = dateDate - timedelta(days = i)
                 print(day)
                 cursor.execute("SELECT COUNT(*) FROM sign_up_user WHERE CAST(date_joined AS DATE) = %s", [day])
                 result = cursor.fetchall()
                 if result[0][0] > 0:
+                    """SELECTING USER INFO FOR TABLE WHERE NECESSARY"""
                     cursor.execute("SELECT username, first_name, last_name, user_type, CAST(date_joined AS DATE) FROM sign_up_user WHERE CAST(date_joined AS DATE) = %s", [day])
                     userInfo.append(cursor.fetchall())
-                    userInfoCols = [col[0] for col in cursor.description]
                 else:
                     userInfo.append(0)
                 print("RESULT:", result, "RESULT[0]", result[0][0])
                 userCount.append(result[0][0])
+            userInfoCols = ['Username', 'First Name', 'Last Name', 'User Type', 'Date Joined']
             print("USERCOUNT:", userCount)
             print("USERINFO:", userInfo)
         except:
             print("FAILED USERDATA QUERY")
+            return(redirect(report_select))
         myseries = [{
                 'name': 'Users',
                 'data': userCount
@@ -420,35 +422,39 @@ def UserSignupDateGraphMonth(request):
     # TODO: Add Label for Dates (x-axis label)
     days = []
     date = datetime.datetime.now()
-    for i in range(31, 1, -1):
+    i = 31
+    while i >= 0:
         day = date - timedelta(days=i)
         days.append(day.strftime('%x'))
-    days.append(date.strftime('%x'))
+        i -= 1
     categories = days
     print("CATEGORIES", categories)
     with connection.cursor() as cursor:
         try:
             userCount = []
             userInfo = []
-            userInfoCols = []
             dateDate = datetime.date.today()
-            for i in range(31):
+            for i in range(31, -1, -1):
                 day = dateDate - timedelta(days=i)
                 print(day)
                 cursor.execute("SELECT COUNT(*) FROM sign_up_user WHERE CAST(date_joined AS DATE) = %s", [day])
                 result = cursor.fetchall()
                 if result[0][0] > 0:
+                    """SELECTING USER INFO FOR TABLE WHERE NECESSARY"""
                     cursor.execute("SELECT username, first_name, last_name, user_type, CAST(date_joined AS DATE) FROM sign_up_user WHERE CAST(date_joined AS DATE) = %s", [day])
                     userInfo.append(cursor.fetchall())
-                    userInfoCols = [col[0] for col in cursor.description]
                 else:
                     userInfo.append(0)
                 print("RESULT:", result, "RESULT[0]", result[0][0])
                 userCount.append(result[0][0])
             print("USERCOUNT:", userCount)
+            userInfoCols = ['Username', 'First Name', 'Last Name', 'User Type', 'Date Joined']
             print("USERINFO:", userInfo)
         except:
             print("FAILED USERDATA QUERY")
+            return(redirect(report_select))
+
+        """CREATING HIGHCHART"""
         myseries = [{
                 'name': 'Users',
                 'data': userCount
@@ -474,48 +480,55 @@ def UserSignupDateGraphMonth(request):
 def loanResults(request):
     with connection.cursor() as cursor:
         try:
-            totalLoans = None
-            overdueLoans = None
-            damagedLoans = None
-            lostLoans = None
-            activeLoans = None
+            """FETCHING COUNTS OF LOANS BY RESULT"""
             # Total Loans
             cursor.execute("SELECT COUNT(*) FROM loan")
             totalLoans = cursor.fetchall()
             if totalLoans[0][0] or totalLoans[0][0] == 0:
                 totalLoans = totalLoans[0][0]
             else: totalLoans = 0
-            print("TOTAL:",totalLoans)
-            # Overdue Loans
+                # Overdue Loans
             cursor.execute("SELECT COUNT(*) FROM loan WHERE overdue_date_num > 0")
             overdueLoans = cursor.fetchall()
             if overdueLoans[0][0] or overdueLoans[0][0] == 0:
                 overdueLoans = overdueLoans[0][0]
             else: overdueLoans = 0
-            print("OVERDUE:",overdueLoans)
             # Damaged Loans
             cursor.execute("SELECT COUNT(*) FROM loan WHERE damaged = 1")
             damagedLoans = cursor.fetchall()
             if damagedLoans[0][0] or damagedLoans[0][0] == 0:
                 damagedLoans = damagedLoans[0][0]
             else: damagedLoans = 0
-            print("DAMAGED:",damagedLoans)
             # Lost Loans
             cursor.execute("SELECT COUNT(*) FROM loan WHERE lost = 1")
             lostLoans = cursor.fetchall()
-            if lostLoans is not None:
+            if lostLoans[0][0] or damagedLoans[0][0] == 0:
                 lostLoans = lostLoans[0][0]
             else: lostLoans = 0
-            print("LOST:",lostLoans)
             # Active Loans
             cursor.execute("SELECT COUNT(*) FROM loan WHERE active = 1")
             activeLoans = cursor.fetchall()
-            print("ACTIVE:",activeLoans)
             if activeLoans[0][0] or activeLoans[0][0] == 0:
                 activeLoans = activeLoans[0][0]
-            else:
-                activeLoans = 0
+            else: activeLoans = 0
             returnedLoans = totalLoans - overdueLoans - damagedLoans - activeLoans - lostLoans
+
+
+            """QUERYING FOR DATA FOR EACH TABLE BY RESULT"""
+            infoCols = ["Loan ID", "User ID", "User Type ID", "Item ID", "Item Copy ID", "Item Type", "Borrow Date", "Return Due Date"]
+            query = "SELECT loan_ID, user_ID, user_type_ID, item_ID, item_copy_ID, item_type, borrow_date, return_due_date FROM loan WHERE "
+            cursor.execute(query + "overdue_date_num > 0")
+            overdueLoanInfo = cursor.fetchall()
+            cursor.execute(query + "damaged = 1")
+            damagedLoanInfo = cursor.fetchall()
+            cursor.execute(query + "lost = 1")
+            lostLoanInfo = cursor.fetchall()
+            cursor.execute(query + "active = 1")
+            activeLoanInfo = cursor.fetchall()
+            cursor.execute(query + "overdue_date_num = 0 AND damaged = 0 AND lost = 0 AND active = 0")
+            returnedLoanInfo = cursor.fetchall()
+
+            """CREATING HIGHCHART"""
             myseries = [{
                 'name': 'Loans',
                 'colorByPoint': 'true',
@@ -563,7 +576,7 @@ def loanResults(request):
             }
             dump = json.dumps(chart)
             print(dump)
-            return render(request, 'loanResults.html', {'chart': dump})
+            return render(request, 'loanResults.html', {'chart': dump, 'totalLoans': totalLoans, 'infoCols': infoCols, 'overdueLoanInfo': overdueLoanInfo, 'damagedLoanInfo': damagedLoanInfo, 'lostLoanInfo': lostLoanInfo, 'activeLoanInfo': activeLoanInfo, 'returnedLoanInfo': returnedLoanInfo})
         except:
             print("FAILED LOAN QUERY")
             return redirect(report_select)

@@ -238,42 +238,96 @@
         <script>
           Highcharts.chart('container', {{chart|safe}});
         </script>
+        <p>Total number of loans: {{totalLoans}}</p>
     <br><br><br><br>
-        <!--
-        {% if userInfoCols %}
-        <table class="table" id="userData">
+        <!--return render(request, 'loanResults.html', {'chart': dump, 'totalLoans': totalLoans, 'overdueLoanInfo': overdueLoanInfo,
+        'damagedLoanInfo': damagedLoanInfo, 'lostLoanInfo': lostLoanInfo, 'activeLoanInfo': activeLoanInfo,
+        'returnedLoanInfo': returnedLoanInfo})-->
+        <table class="table" id="returnedLoanData">
             <tr>
-                <th colspan="5">Users Found in Query</th>
+                <th colspan="7">Returned Loans (No Issues)</th>
             </tr>
             <tr>
-                <th>Username</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>User Type</th>
-                <th>Date Joined</th>
+                {% for col in infoCols %}
+                <th>{{col}}</th>
+                {% endfor %}
             </tr>
-            {% for row in userInfo %}
+            {% for row in returnedLoanInfo %}
             <tr>
-                {% if row != 0 %}
-                    {% for thing in row %}
-                    {% for item in thing %}
-                    {% if item == '1' %}
-                        <td>Student</td>
-                    {% elif item == '2' %}
-                        <td>Faculty</td>
-                    {% elif item == '3' %}
-                        <td>Employee</td>
-                    {% else %}
-                        <td>{{item}}</td>
-                    {% endif %}
-                    {% endfor %}
-                    {% endfor %}
-                {% endif %}
+                {% for item in row %}
+                <td>{{item}}</td>
+                {% endfor %}
             </tr>
             {% endfor %}
-        </table>
-        {% endif %}
-        -->
+        </table><br><br>
+        <table class="table" id="overdueLoanData">
+            <tr>
+                <th colspan="7">Overdue Loans</th>
+            </tr>
+            <tr>
+                {% for col in infoCols %}
+                <th>{{col}}</th>
+                {% endfor %}
+            </tr>
+            {% for row in overdueLoanInfo %}
+            <tr>
+                {% for item in row %}
+                <td>{{item}}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </table><br><br>
+        <table class="table" id="lostLoanData">
+            <tr>
+                <th colspan="7">Lost Loans</th>
+            </tr>
+            <tr>
+                {% for col in infoCols %}
+                <th>{{col}}</th>
+                {% endfor %}
+            </tr>
+            {% for row in lostLoanInfo %}
+            <tr>
+                {% for item in row %}
+                <td>{{item}}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </table><br><br>
+        <table class="table" id="damagedLoanData">
+            <tr>
+                <th colspan="7">Damaged Loans</th>
+            </tr>
+            <tr>
+                {% for col in infoCols %}
+                <th>{{col}}</th>
+                {% endfor %}
+            </tr>
+            {% for row in damagedLoanInfo %}
+            <tr>
+                {% for item in row %}
+                <td>{{item}}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </table><br><br>
+        <table class="table" id="activeLoanData">
+            <tr>
+                <th colspan="7">Active Loans</th>
+            </tr>
+            <tr>
+                {% for col in infoCols %}
+                <th>{{col}}</th>
+                {% endfor %}
+            </tr>
+            {% for row in activeLoanInfo %}
+            <tr>
+                {% for item in row %}
+                <td>{{item}}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </table><br><br>
     </main>
 
 	<!-- JS here -->
