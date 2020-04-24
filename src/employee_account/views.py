@@ -3,6 +3,7 @@ from django.contrib.auth import logout as myLogout
 from django.contrib.auth.decorators import login_required
 from django.db import connection
 from django.shortcuts import render, redirect
+from datetime import datetime, timedelta
 import datetime
 import json
 
@@ -304,6 +305,10 @@ def report_select(request):
     if request.method == 'POST':
         if request.POST.get('UserSignupsGraphWeek'):
             return redirect('/employeePage/reports/UserSignupsGraphWeek/')
+        elif request.POST.get('UserSignupsGraphMonth'):
+            return redirect('/employeePage/reports/UserSignupsGraphMonth/')
+        elif request.POST.get('LoanResults'):
+            return redirect('/employeePage/reports/LoanResults/')
     return render(request, 'report_select.html')
     # If statement for POST for report type
         # Any if statements for report date ranges or other options
@@ -312,22 +317,17 @@ def report_select(request):
 def UserSignupDateGraphWeek(request):
     days = []
     date = datetime.datetime.now()
-    days.append(date.strftime('%x'))
-    for i in range(7, 1, -1):
+    for i in range(7, 0, -1):
         day = datetime.datetime(date.year, date.month, date.day - i)
         days.append(day.strftime('%x'))
+    days.append(date.strftime('%x'))
     categories = days
     print("CATEGORIES", categories)
     with connection.cursor() as cursor:
         try:
-
-            # cursor.execute("SELECT
-            #
-            # select id from tbname
-            # where date between date_sub(now(),INTERVAL 1 WEEK) and now())
-            # userData = cursor.fetchall()
             userCount = []
             userInfo = []
+            userInfoCols = []
             date = datetime.datetime.now()
             for i in range(7):
                 day = datetime.datetime(date.year, date.month, date.day - i)
@@ -353,7 +353,7 @@ def UserSignupDateGraphWeek(request):
     chart = {
         'chart': {'type': 'column'},
         'title': {'text': 'User Signup Count (Past Week)'},
-        'xAxis': {'categories': categories},
+        'xAxis': {'categories': categories, 'title': {'text': 'Join Dates'}},
         'yAxis': {
             'min': 0,
             'title': {
@@ -415,7 +415,158 @@ def UserSignupDateGraphWeek(request):
     #                             'series': series, 'title': title, 'subtitle': subtitle, 'tooltip': tooltip,
     #                             'legend': legend, 'xAxis': xAxis, 'yAxis': yAxis})
 
+@login_required(login_url='/my_login')
+def UserSignupDateGraphMonth(request):
+    # TODO: Add Label for Dates (x-axis label)
+    days = []
+    date = datetime.datetime.now()
+    for i in range(31, 1, -1):
+        day = date - timedelta(days=i)
+        days.append(day.strftime('%x'))
+    days.append(date.strftime('%x'))
+    categories = days
+    print("CATEGORIES", categories)
+    with connection.cursor() as cursor:
+        try:
+            userCount = []
+            userInfo = []
+            userInfoCols = []
+            dateDate = datetime.date.today()
+            for i in range(31):
+                day = dateDate - timedelta(days=i)
+                print(day)
+                cursor.execute("SELECT COUNT(*) FROM sign_up_user WHERE CAST(date_joined AS DATE) = %s", [day])
+                result = cursor.fetchall()
+                if result[0][0] > 0:
+                    cursor.execute("SELECT username, first_name, last_name, user_type, CAST(date_joined AS DATE) FROM sign_up_user WHERE CAST(date_joined AS DATE) = %s", [day])
+                    userInfo.append(cursor.fetchall())
+                    userInfoCols = [col[0] for col in cursor.description]
+                else:
+                    userInfo.append(0)
+                print("RESULT:", result, "RESULT[0]", result[0][0])
+                userCount.append(result[0][0])
+            print("USERCOUNT:", userCount)
+            print("USERINFO:", userInfo)
+        except:
+            print("FAILED USERDATA QUERY")
+        myseries = [{
+                'name': 'Users',
+                'data': userCount
+        }]
+    chart = {
+        'chart': {'type': 'column'},
+        'title': {'text': 'User Signup Count (Past Month)'},
+        'xAxis': {'categories': categories, 'title': {'text': 'Join Dates'}},
+        'yAxis': {
+            'min': 0,
+            'title': {
+                'text': 'Number of Users Joined',
+                'align': 'high'
+            }
+        },
+        'series': myseries
+    }
+    dump = json.dumps(chart)
+    print(dump)
+    return render(request, 'UserSignupDateGraphMonth.html', {'chart': dump, 'userInfo': userInfo, 'userInfoCols': userInfoCols})
 
+@login_required(login_url='/my_login')
+def loanResults(request):
+    with connection.cursor() as cursor:
+        try:
+            totalLoans = None
+            overdueLoans = None
+            damagedLoans = None
+            lostLoans = None
+            activeLoans = None
+            # Total Loans
+            cursor.execute("SELECT COUNT(*) FROM loan")
+            totalLoans = cursor.fetchall()
+            if totalLoans[0][0] or totalLoans[0][0] == 0:
+                totalLoans = totalLoans[0][0]
+            else: totalLoans = 0
+            print("TOTAL:",totalLoans)
+            # Overdue Loans
+            cursor.execute("SELECT COUNT(*) FROM loan WHERE overdue_date_num > 0")
+            overdueLoans = cursor.fetchall()
+            if overdueLoans[0][0] or overdueLoans[0][0] == 0:
+                overdueLoans = overdueLoans[0][0]
+            else: overdueLoans = 0
+            print("OVERDUE:",overdueLoans)
+            # Damaged Loans
+            cursor.execute("SELECT COUNT(*) FROM loan WHERE damaged = 1")
+            damagedLoans = cursor.fetchall()
+            if damagedLoans[0][0] or damagedLoans[0][0] == 0:
+                damagedLoans = damagedLoans[0][0]
+            else: damagedLoans = 0
+            print("DAMAGED:",damagedLoans)
+            # Lost Loans
+            cursor.execute("SELECT COUNT(*) FROM loan WHERE lost = 1")
+            lostLoans = cursor.fetchall()
+            if lostLoans is not None:
+                lostLoans = lostLoans[0][0]
+            else: lostLoans = 0
+            print("LOST:",lostLoans)
+            # Active Loans
+            cursor.execute("SELECT COUNT(*) FROM loan WHERE active = 1")
+            activeLoans = cursor.fetchall()
+            print("ACTIVE:",activeLoans)
+            if activeLoans[0][0] or activeLoans[0][0] == 0:
+                activeLoans = activeLoans[0][0]
+            else:
+                activeLoans = 0
+            returnedLoans = totalLoans - overdueLoans - damagedLoans - activeLoans - lostLoans
+            myseries = [{
+                'name': 'Loans',
+                'colorByPoint': 'true',
+                'data': [{
+                    'name': 'Overdue',
+                    'y': overdueLoans,
+                    'sliced': 'true',
+                    'selected': 'true'
+                }, {
+                    'name': 'Damaged',
+                    'y': damagedLoans
+                }, {
+                    'name': 'Lost',
+                    'y': lostLoans
+                }, {
+                    'name': 'Active',
+                    'y': activeLoans
+                }, {
+                    'name': 'Returned Properly',
+                    'y': returnedLoans
+                }]
+            }]
+            chart = {
+                'chart': {
+                    # 'plotBackgroundColor': 'null',
+                    # 'plotBorderWidth': 'null',
+                    # 'plotShadow': 'false',
+                    'type': 'pie'
+                },
+                'title': {'text': 'Loan Data'},
+                'toolTip': {
+                    'pointFormat': '{series.name}: <b>{point.percentage:.1f}</b>'
+                },
+                'plotOptions': {
+                    'pie': {
+                        'allowPointSelect': 'true',
+                        'cursor': 'pointer',
+                        'dataLabels': {
+                            'enabled': 'true',
+                            'format': '<b>{point.name}</b>: {point.percentage:.1f}'
+                        }
+                    }
+                },
+                'series': myseries
+            }
+            dump = json.dumps(chart)
+            print(dump)
+            return render(request, 'loanResults.html', {'chart': dump})
+        except:
+            print("FAILED LOAN QUERY")
+            return redirect(report_select)
 
 @login_required
 def logout(request):

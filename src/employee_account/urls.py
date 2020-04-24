@@ -25,5 +25,7 @@ urlpatterns=[
     path('/manage/list_all/', views.manage_list_all, name='manage_list_all'),
     path('/reports/', views.report_select, name='report_select'),
     path('/reports/UserSignupsGraphWeek/', views.UserSignupDateGraphWeek, name='UserSignupDateGraphWeek'),
-    path('logout', views.logout, name='logout'),
+    path('/reports/UserSignupsGraphMonth/', views.UserSignupDateGraphMonth, name='UserSignupDateGraphMonth'),
+    path('/reports/LoanResults/', views.loanResults, name='LoanResults'),
+    path('logout', views.logout, name='logout')
 ]
