@@ -5,8 +5,8 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>eCommerce HTML-5 Template </title>
-    <meta name="description" content="">
+    <title>Book Management Home</title>
+    <meta name="description" content="Manage books in our collection.">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="manifest" href="site.webmanifest">
     <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/favicon.ico' %}">
@@ -72,7 +72,7 @@
                                    <ul>                                          
                                         {% if user.is_authenticated %}
                                         <li> <p style="color: #ffffff"> Hello, {{user.first_name}}</p>  </li>
-                                        <!-- <li><a href="#">My Account</a></li> -->
+                                        <li><a href="{% url 'userAccount' %}">My Account</a></li>
                                         <li><a href="{% url 'logout' %}">Logout</a></li>
  
                                         {% else %}
@@ -92,17 +92,17 @@
                             <!-- Logo -->
                             <div class="col-xl-1 col-lg-1 col-md-1 col-sm-3">
                                 <div class="logo">
-                                  <a href="#"><img src="{% static 'img/logo/lib_logo.png' %}" alt=""></a>
+                                  <a href="{% url 'home' %}"><img src="{% static 'img/logo/lib_logo.png' %}" alt=""></a>
                                 </div>
                             </div>
                             <div class="col-xl-6 col-lg-8 col-md-7 col-sm-5">
                                 <!-- Main-menu -->
                                 <div class="main-menu f-right d-none d-lg-block">
                                     <nav>                                                
-                                        <ul id="navigation">                                                                                                                                     
-                                            <li><a href="/employeePage/manage_books">Manage Books</a></li>
-                                            <li><a href="/employeePage/manage_laptops">Manage Laptops</a></li>
-                                            <li><a href="/employeePage/manage_media">Manage Media</a></li>
+                                        <ul id="navigation">
+                                            <li><a href="{% url 'manage_books' %}">Manage Books</a></li>
+                                            <li><a href="{% url 'manage_laptops' %}">Manage Laptops</a></li>
+                                            <li><a href="{% url 'manage_media' %}">Manage Media</a></li>
                                             <li><a href="/employeePage/manage/list_all">Database Listing</a></li>
                                         </ul>
                                     </nav>
@@ -152,7 +152,32 @@
                     <div class="row">
                         <div class="col-xl-12">
                             <div class="hero-cap text-center">
-                                <h2>Employee Account</h2>
+                                <div class="row d-flex justify-content-between">
+                                    <div class="product-img">
+                                        <img src="{% static 'img/product/book-default.png' %}" alt="" width="200px" height="200px">
+                                    </div>
+                                    <h2>Book Management</h2>
+                                    <div class="product-img">
+                                        <img src="{% static 'img/product/book-default.png' %}" alt="" width="200px" height="200px">
+                                    </div>
+                                </div>
+                                <div class="container">
+                                    <div class="row d-flex justify-content-between">
+                                        <a href="/employeePage/manage_books/add"><h4>Add Books</h4></a>
+                                        <a href="/employeePage/manage_books/delete"><h4>Delete Books</h4></a>
+                                        <a href="/employeePage/manage_books/edit_select"><h4>Modify Books</h4></a>
+                                        <a href="/employeePage/manage_books/list"><h4>List Books</h4></a>
+                                    </div>
+                                </div>
+                                <!--<div>
+                                    <nav>
+                                        <ul id="book-mgmt-navigation">
+                                            <li><a href="/employeePage/manage_books/add">Add Books</a></li>
+                                            <li><a href="#">Delete Books</a></li>
+                                            <li><a href="#">Modify Books</a></li>
+                                        </ul>
+                                    </nav>
+                                </div>-->
                             </div>
                         </div>
                     </div>
@@ -162,10 +187,73 @@
         <!-- slider Area End-->
 
         <!-- Latest Products Start -->
-        <section class="latest-product-area latest-padding">
-            <div class="container">
+        <!-- DATA INPUT HERE -->
+        <!--<section class="data input">-->
+            <!--<div class="container">
                 <div class="row product-btn d-flex justify-content-between">
-                        <div class="properties__button">
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        ISBN: <input type="text" name="book_isbn"/><br/>
+                        book_title: <input type="text" name="book_title"/><br/>
+                        book_author: <input type="text" name="book_author"/><br/>
+                        book_publisher: <input type="text" name="book_publisher"/><br/>
+                        book_subject: <input type="text" name="book_subject"/><br/>
+                        date_of_publication: <input type="text" name="book_date_of_publication"/><br/>
+                        MSRP: <input type="text" name="book_MSRP"/><br/>
+                        <input type="submit" value="add_book"/>
+                    </form>
+                    <form method="POST" class="post-form" action="#">
+                    -->
+            <!--<form method="POST" class="book-form" id="book-form" action="">
+                {% csrf_token %}
+                <div class="container">
+                <div class="form-group">
+                    <label for="book_isbn">ISBN</label>
+                    <div class="col-sm-10">
+                    <input type="text" name="book_isbn" id="book_isbn" value="" required/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="book_title">Title</label>
+                    <div class="col-sm-10">
+                    <input type="text" name="book_title" id="book_title" value="" required/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="book_author">Author</label>
+                    <div class="col-sm-10">
+                    <input type="text" name="book_author" id="book_author" value="" required/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="book_publisher">Publisher</label>
+                    <div class="col-sm-10">
+                    <input type="text" name="book_publisher" id="book_publisher" value="" required/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="book_subject">Subject</label>
+                    <div class="col-sm-10">
+                    <input type="text" name="book_subject" id="book_subject" value="" required/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="book_date_of_publication">Date of Publication</label>
+                    <div class="col-sm-10">
+                    <input type="date" name="book_date_of_publication" id="book_date_of_publication" value="" required/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="book_MSRP">MSRP</label>
+                    <div class="col-sm-10">
+                    <input type="text" name="book_MSRP" id="book_MSRP" value="" required/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button class="button" type="submit" form="book-form" value="Submit">Submit</button>
+                </div>
+            </form>-->
+                    <div class="properties__button">
                             <!--Nav Button  -->
                             <!--End Nav Button  -->
                         </div>
@@ -186,9 +274,9 @@
                         </div> -->
                 </div>
                 <!-- Nav Card -->
-                <div class="tab-content" id="nav-tabContent">
+                <!--<div class="tab-content" id="nav-tabContent">-->
                     <!-- card one -->
-                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                    <!--<div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                         <div class="row">
                             {% for book in books %}
                             <div class="col-xl-4 col-lg-4 col-md-6">
@@ -205,7 +293,7 @@
                             {% endfor %}
 
                         </div>
-                    </div>
+                    </div>-->
                     <!-- Card two -->
                     <!-- <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
                         <div class="row">
@@ -754,14 +842,14 @@
     </main>
    <footer>
        <!-- Footer Start-->
-       <!-- <div class="footer-area footer-padding">
+       <!--<div class="footer-area footer-padding">
            <div class="container">
                <div class="row d-flex justify-content-between">
                    <div class="col-xl-3 col-lg-3 col-md-5 col-sm-6">
                       <div class="single-footer-caption mb-50">
-                        <div class="single-footer-caption mb-30"> -->
+                        <div class="single-footer-caption mb-30">-->
                              <!-- logo -->
-                            <!-- <div class="footer-logo">
+                            <!--<div class="footer-logo">
                                 <a href="index.html"><img src="{% static 'img/logo/logo2_footer.png' %}" alt=""></a>
                             </div>
                             <div class="footer-tittle">
