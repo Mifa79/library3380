@@ -3,6 +3,8 @@ from django.contrib.auth import logout as myLogout
 from django.contrib.auth.decorators import login_required
 from django.db import connection
 from django.shortcuts import render, redirect
+import datetime
+import json
 
 # Create your views here.
 @login_required
@@ -296,6 +298,123 @@ def manage_list_all(request):
         mediaCols = [col[0] for col in cursor.description]
         context = {'bookRows':bookRows, 'bookCols':bookCols, 'lapRows':lapRows, 'lapCols':lapCols, 'mediaRows':mediaRows, 'mediaCols':mediaCols}
     return render(request, 'manage_list_all.html', context)
+
+@login_required(login_url='/my_login')
+def report_select(request):
+    if request.method == 'POST':
+        if request.POST.get('UserSignupsGraphWeek'):
+            return redirect('/employeePage/reports/UserSignupsGraphWeek/')
+    return render(request, 'report_select.html')
+    # If statement for POST for report type
+        # Any if statements for report date ranges or other options
+
+@login_required(login_url='/my_login')
+def UserSignupDateGraphWeek(request):
+    days = []
+    date = datetime.datetime.now()
+    days.append(date.strftime('%x'))
+    for i in range(7, 1, -1):
+        day = datetime.datetime(date.year, date.month, date.day - i)
+        days.append(day.strftime('%x'))
+    categories = days
+    print("CATEGORIES", categories)
+    with connection.cursor() as cursor:
+        try:
+
+            # cursor.execute("SELECT
+            #
+            # select id from tbname
+            # where date between date_sub(now(),INTERVAL 1 WEEK) and now())
+            # userData = cursor.fetchall()
+            userCount = []
+            userInfo = []
+            date = datetime.datetime.now()
+            for i in range(7):
+                day = datetime.datetime(date.year, date.month, date.day - i)
+                print(day)
+                cursor.execute("SELECT COUNT(*) FROM sign_up_user WHERE CAST(date_joined AS DATE) = %s", [day])
+                result = cursor.fetchall()
+                if result[0][0] > 0:
+                    cursor.execute("SELECT username, first_name, last_name, user_type, CAST(date_joined AS DATE) FROM sign_up_user WHERE CAST(date_joined AS DATE) = %s", [day])
+                    userInfo.append(cursor.fetchall())
+                    userInfoCols = [col[0] for col in cursor.description]
+                else:
+                    userInfo.append(0)
+                print("RESULT:", result, "RESULT[0]", result[0][0])
+                userCount.append(result[0][0])
+            print("USERCOUNT:", userCount)
+            print("USERINFO:", userInfo)
+        except:
+            print("FAILED USERDATA QUERY")
+        myseries = [{
+                'name': 'Users',
+                'data': userCount
+        }]
+    chart = {
+        'chart': {'type': 'column'},
+        'title': {'text': 'User Signup Count (Past Week)'},
+        'xAxis': {'categories': categories},
+        'yAxis': {
+            'min': 0,
+            'title': {
+                'text': 'Number of Users Joined',
+                'align': 'high'
+            }
+        },
+        'series': myseries
+    }
+    dump = json.dumps(chart)
+    print(dump)
+    return render(request, 'UserSignupDateGraphWeek.html', {'chart': dump, 'userInfo': userInfo, 'userInfoCols': userInfoCols})
+    #     myseries = [{
+    #             'name': 'Users',
+    #             'data': userCount,
+    #             'color': '#3771c8'
+    #     }]
+    #     chart = {'type': 'column'}
+    #     title = {'text': 'User Signup Count (Past Week)'}
+    #     subtitle = 'my subtitle'
+    #     xAxis = {'categories': categories},
+    #     yAxis = {
+    #         'min': 0,
+    #         'title': {
+    #             'text': 'Number of Users Joined',
+    #             'align': 'high'
+    #         }
+    #     }
+    #     series = myseries,
+    #     tooltip = {'shared': 'true',
+    #                 'valueSuffix': 'users'},
+    #     plot_options = {
+    #         'bar': {
+    #             'dataLabels': {
+    #                 'enabled': 'true'
+    #             }
+    #         }
+    #     }
+    #     legend = {'layout': 'vertical', 'align': 'right',
+    #                'floating': 'true', 'verticalAlign': 'top',
+    #                'x': -40, 'borderWidth': 1,
+    #                'y': -80, 'borderColor': '#e3e3e3'}
+    #     chart = {"renderTo": chartID, "type": chart_type, "height": chart_height, }
+    #     title = {"text": 'Check Valve Data'}
+    #     xAxis = {"title": {"text": 'Serial Number'}, "categories": data['serial numbers']}
+    #     yAxis = {"title": {"text": 'Data'}}
+    #     series = [
+    #         {"name": 'Mass (kg)', "data": data['mass']},
+    #         {"name": 'Pressure Drop (psid)', "data": data['pressure drop']},
+    #         {"name": 'Cracking Pressure (psid)', "data": data['cracking pressure']}
+    #     ]
+    #
+    #     return render(request, 'unit/data_plot.html', {'chartID': chartID, 'chart': chart,
+    #                                                    'series': series, 'title': title,
+    #                                                    'xAxis': xAxis, 'yAxis': yAxis})
+    # return render(request, 'UserSignupDateGraphWeek.html', {'chart': dump})
+    # print(chart, plot_options, series, title, subtitle, tooltip, legend, xAxis, yAxis)
+    # return render(request, 'UserSignupDateGraphWeek.html', {'chart': chart, 'plot_options': plot_options,
+    #                             'series': series, 'title': title, 'subtitle': subtitle, 'tooltip': tooltip,
+    #                             'legend': legend, 'xAxis': xAxis, 'yAxis': yAxis})
+
 
 
 @login_required
