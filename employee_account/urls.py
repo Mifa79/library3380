@@ -26,5 +26,10 @@ urlpatterns=[
     path('/manage_media/edit_select/', views.manage_media_edit_select, name='manage_media_edit_select'),
     path('/manage_media/list/', views.manage_media_list, name='manage_media_list'),
     path('/manage/list_all/', views.manage_list_all, name='manage_list_all'),
+    path('/reports/', views.report_select, name='report_select'),
+    path('/reports/UserSignupsGraphWeek/', views.UserSignupDateGraphWeek, name='UserSignupDateGraphWeek'),
+    path('/reports/UserSignupsGraphMonth/', views.UserSignupDateGraphMonth, name='UserSignupDateGraphMonth'),
+    path('/reports/LoanResults/', views.loanResults, name='LoanResults'),
+    path('/reports/SubjectAmounts/', views.subjectAmounts, name='SubjectAmounts'),
     path('logout', views.logout, name='logout'),
 ]
