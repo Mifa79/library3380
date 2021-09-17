@@ -1,6 +1,9 @@
 # Group-Project
 COSC 3380 - Database System
 
+**#Link to Demo**  
+https://elibrary3380.herokuapp.com/
+
 **#Database Preparation**  
 Install mysql Ver 8.0.19, and Mysql Workbench in your computer  
 Reset your mysql password to "rootroot"  
